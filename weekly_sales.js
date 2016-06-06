@@ -46,7 +46,6 @@ exports.mostPopularProductSold = function(productData) {
 exports.leastPopularProductSold = function(productData) {
   var minValue = 10000000;
   var leastPopularProduct = undefined;
-  console.log("minValue :" + minValue);
 
   for (key in productData) {
     if (productData[key] < minValue) {
@@ -57,3 +56,7 @@ exports.leastPopularProductSold = function(productData) {
   console.log("The least popular product is :" + leastPopularProduct + " with a quantity of :" + minValue);
   return leastPopularProduct;
 };
+
+exports.getCategories = function(productData) {
+
+}
