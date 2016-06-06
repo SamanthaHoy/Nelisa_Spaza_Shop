@@ -2,6 +2,7 @@
 
 var allProducts = require('../weekly_sales');
 var assert = require('assert');
+var result3 = undefined;
 
 describe("Accessing the week1's csv file", function() {
 
@@ -14,6 +15,7 @@ describe("Accessing the week1's csv file", function() {
   it('it should return unique list of products', function() {
     var products = allProducts.weeklySales(1);
     var result1 = allProducts.groupedByProductName(products);
+    result3 = result1;
     var result2 = {
       'Milk 1l': 39,
       Imasi: 30,
@@ -32,8 +34,18 @@ describe("Accessing the week1's csv file", function() {
       'Mixed Sweets 5s': 49
     };
     assert.deepEqual(result1, result2);
-  })
+  });
 
-  // describe("")
+  it("it should return the most popular product", function() {
+    var result1 = allProducts.mostPopularProductSold(result3); // result from the grouped data
+    var result2 = 'Coke 500ml';
+    assert.equal(result1, result2);
+  });
+
+  it("it should return the least popular product", function() {
+    var result1 = allProducts.leastPopularProductSold(result3); // result from the grouped data
+    var result2 = 'Shampoo 1 litre';
+    assert.equal(result1, result2);
+  });
 
 });
