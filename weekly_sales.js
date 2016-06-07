@@ -3,8 +3,8 @@
 exports.weeklySales = function(week) {
   var fs = require('fs'); // imports the csv file
   var fileContent = fs.readFileSync('./files/week' + week + '.csv', 'utf8'); /* gets the content of all the files from the pathname */
-  if (week === 1) { /* splits the content by the new line character , ignores 1st and last lines*/
-    var products = fileContent.split('\n').slice(1, -1);
+  if (week === 1) {
+    var products = fileContent.split('\n').slice(1, -1);/* splits the content by the new line character , ignores 1st and last lines*/
   } else if (week === 2 || week === 3 || week === 4) {
     var products = fileContent.split('\n').slice(0, -1); /* splits the content by the new line character , ignores last lines*/
   }
@@ -57,6 +57,13 @@ exports.leastPopularProductSold = function(productData) {
   return leastPopularProduct;
 };
 
-exports.getCategories = function(productData) {
+// exports.getCategoriesFile = function(file) {
+//   var fs = require('fs'); // imports the csv file
+//   var fileContent = fs.readFileSync('./files/' + file, 'utf8'); /* gets the content of all the files from the pathname */
+//   var categories = fileContent.split('\n').slice(0, -1); // splits and removes the last line
+//   return categories;
+// };
 
-}
+// exports.getProductCategories = function(productData,category) {
+//
+// }

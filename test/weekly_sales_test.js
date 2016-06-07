@@ -2,17 +2,35 @@
 
 var allProducts = require('../weekly_sales');
 var assert = require('assert');
-var result3 = undefined;
+var result3 = undefined
 
-describe("Accessing the week1's csv file", function() {
+describe("Accessing and writing functions for the week's csv file", function() {
 
-  it('it should find the week"s file ', function() {
+  it('it should find the week1"s file ', function() {
     var readFile = allProducts.weeklySales(1);
     console.log(readFile);
     assert.equal(readFile.length, 105);
   });
 
-  it('it should return unique list of products', function() {
+  it("it should find the week2's file ", function() {
+    var readFile = allProducts.weeklySales(2);
+    console.log(readFile);
+    assert.equal(readFile.length, 118);
+  });
+
+  it("it should find the week3's file ", function() {
+    var readFile = allProducts.weeklySales(3);
+    console.log(readFile);
+    assert.equal(readFile.length,105);
+  });
+
+  it("it should find the week4's file ", function() {
+    var readFile = allProducts.weeklySales(4);
+    console.log(readFile);
+    assert.equal(readFile.length,120  );
+  });
+
+  it("it should return unique list of products", function() {
     var products = allProducts.weeklySales(1);
     var result1 = allProducts.groupedByProductName(products);
     result3 = result1;
@@ -48,4 +66,14 @@ describe("Accessing the week1's csv file", function() {
     assert.equal(result1, result2);
   });
 
+  // it('it should find the category file ', function() {
+  //   var readFile = allProducts.getCategoriesFile('categories.csv');
+  //   console.log(readFile);
+  //   assert.equal(readFile.length, 15);
+  // });
+  //
+  // it('it should group products by category', function(){
+  //   var categories = allProducts.getProductCategories('categories.csv');
+  //   var result1 = groupProductsByCategory(categories);
+  // })
 });
