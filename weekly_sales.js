@@ -64,24 +64,62 @@ exports.getCategoriesFile = function() {
   return categories;
 };
 
-exports.groupedByCategory = function(categories) {
-  var categoryData = [];
+exports.createCategoryMap = function(categories) {
+  var categoryData = {};
 
   categories.forEach(function(category) {
     var delimitedData = category.split(',');
     var Stock_item = delimitedData[0];
     var Category = delimitedData[1];
-    categoryData.push({
-      "Category": Category,
-      "Stock_item": Stock_item
-    });
+    if (categoryData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
+      categoryData[Stock_item] = Category; // initialising
+    }
   });
-
   console.log(categoryData);
   return categoryData;
 };
 
 
-// exports.getProductCategories = function(productData,category) {
-//
-// }
+exports.createProductCategoriesMap = function(productData, categoryData) {
+  var catProdMap = {};
+  for (var prod in productData) {
+    var category = categoryData[prod];
+    var quantity = productData[prod];
+    if (catProdMap[category] === undefined) {
+      catProdMap[category] = 0;
+      // console.log(" initialising - catProdMap : " + category);
+    }
+    catProdMap[category] += Number(quantity);
+    // console.log("Adding to - catProdMap : " + category + " " + catProdMap[category]);
+  }
+  console.log(catProdMap);
+  return catProdMap;
+};
+
+exports.getMostPopularCategory = function(catProdMap) {
+  var maxCat = undefined;
+  var maxValue = 0;
+
+  for (var cat in catProdMap) {
+    if (catProdMap[cat] > maxValue) {
+      maxValue = catProdMap[cat];
+      maxCat = cat;
+    }
+  }
+  console.log("The most popular category is " + maxCat + " (with a value of " + maxValue + ")");
+  return maxCat;
+}
+
+exports.getLeastPopularCategory = function(catProdMap) {
+  var minCat = undefined;
+  var minValue = 109;
+
+  for (cat in catProdMap) {
+    if (catProdMap[cat] < minValue) {
+      minValue = catProdMap[cat];
+      minCat = cat;
+    }
+  }
+  console.log("The least popular category is " + minCat + " (with a value of " + minValue + ")");
+  return minCat;
+}

@@ -88,38 +88,109 @@ describe("Accessing and writing functions for the week's csv file", function() {
     assert.equal(result1, result2);
   });
 
-  it('it should find the category file ', function() {
+  it('it should read the category file ', function() {
     var readFile = allProducts.getCategoriesFile();
     console.log(readFile);
     assert.equal(readFile.length, 15);
   });
 
-  it('it should create an array of categories with products', function(){
+  it('it should create an map of products with categories', function(){
     var readFile = allProducts.getCategoriesFile();
-    var result1 = allProducts.groupedByCategory(readFile);
-    var result2 = [
-  { Category: 'Dairy', Stock_item: 'Milk 1l' },
-  { Category: 'Dairy', Stock_item: 'Imasi' },
-  { Category: 'Bakery', Stock_item: 'Bread' },
-  { Category: 'Non-Perishable food', Stock_item: 'Chakalaka Can' },
-  { Category: 'Non-perishable food',
-    Stock_item: 'Gold Dish Vegetable Curry Can' },
-  { Category: 'Drinks', Stock_item: 'Fanta 500ml' },
-  { Category: 'Drinks', Stock_item: 'Coke 500ml' },
-  { Category: 'Drinks', Stock_item: 'Cream Soda 500ml' },
-  { Category: 'Non-perishable food', Stock_item: 'Iwisa Pap 5kg' },
-  { Category: 'Non-perishable food',
-    Stock_item: 'Top Class Soy Mince' },
-  { Category: 'Toiletries', Stock_item: 'Shampoo 1 litre' },
-  { Category: 'Toiletries', Stock_item: 'Soap Bar' },
-  { Category: 'Fruit', Stock_item: 'Bananas - loose' },
-  { Category: 'Fruit', Stock_item: 'Apples - loose' },
-  { Category: 'Sweets', Stock_item: 'Mixed Sweets 5s' } ];
+    var result1 = allProducts.createCategoryMap(readFile);
+    var result2 =
+      { 'Milk 1l': 'Dairy',
+      Imasi: 'Dairy',
+      Bread: 'Bakery',
+      'Chakalaka Can': 'Non-Perishable food',
+      'Gold Dish Vegetable Curry Can': 'Non-perishable food',
+      'Fanta 500ml': 'Drinks',
+      'Coke 500ml': 'Drinks',
+      'Cream Soda 500ml': 'Drinks',
+      'Iwisa Pap 5kg': 'Non-perishable food',
+      'Top Class Soy Mince': 'Non-perishable food',
+      'Shampoo 1 litre': 'Toiletries',
+      'Soap Bar': 'Toiletries',
+      'Bananas - loose': 'Fruit',
+      'Apples - loose': 'Fruit',
+      'Mixed Sweets 5s': 'Sweets' };
     assert.deepEqual(result1,result2);
   });
 
-  // it('it should group products by category', function(){
-  //   var categories = allProducts.getProductCategories();
-  //   var result1 = groupProductsByCategory(categories);
-  // })
+  it('it should combine products and category into 1 map', function(){
+    var prodData = {
+      'Milk 1l': 39,
+      Imasi: 30,
+      Bread: 45,
+      'Chakalaka Can': 23,
+      'Gold Dish Vegetable Curry Can': 17,
+      'Fanta 500ml': 33,
+      'Coke 500ml': 54,
+      'Cream Soda 500ml': 22,
+      'Iwisa Pap 5kg': 17,
+      'Top Class Soy Mince': 22,
+      'Shampoo 1 litre': 3,
+      'Soap Bar': 12,
+      'Bananas - loose': 47,
+      'Apples - loose': 36,
+      'Mixed Sweets 5s': 49
+    };
+    var catData =
+      { 'Milk 1l': 'Dairy',
+     Imasi: 'Dairy',
+     Bread: 'Bakery',
+     'Chakalaka Can': 'Non-perishable food',
+     'Gold Dish Vegetable Curry Can': 'Non-perishable food',
+     'Fanta 500ml': 'Drinks',
+     'Coke 500ml': 'Drinks',
+     'Cream Soda 500ml': 'Drinks',
+     'Iwisa Pap 5kg': 'Non-perishable food',
+     'Top Class Soy Mince': 'Non-perishable food',
+     'Shampoo 1 litre': 'Toiletries',
+     'Soap Bar': 'Toiletries',
+     'Bananas - loose': 'Fruit',
+     'Apples - loose': 'Fruit',
+     'Mixed Sweets 5s': 'Sweets' };
+     result2 = {
+       Dairy:69,
+       Bakery:45,
+       'Non-perishable food':79,
+       Drinks:109,
+       Toiletries:15,
+       Fruit:83,
+       Sweets:49
+     };
+  var result1 = allProducts.createProductCategoriesMap(prodData,catData);
+    assert.deepEqual(result1,result2);
+  });
+
+  it("it should return the most popular category",function(){
+    var catProdMap = {
+      Dairy:69,
+      Bakery:45,
+      'Non-perishable food':79,
+      Drinks:109,
+      Toiletries:15,
+      Fruit:83,
+      Sweets:49
+    };
+    var result1 = allProducts.getMostPopularCategory(catProdMap);
+    var result2 = 'Drinks';
+    assert.deepEqual(result1,result2);
+  });
+
+  it("it should return the least popular category" , function(){
+    var catProdMap = {
+      Dairy:69,
+      Bakery:45,
+      'Non-perishable food':79,
+      Drinks:109,
+      Toiletries:15,
+      Fruit:83,
+      Sweets:49
+    };
+    result1 = allProducts.getLeastPopularCategory(catProdMap);
+    result2 = 'Toiletries';
+    assert.equal(result1,result2);
+  });
+
 });
