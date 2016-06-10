@@ -140,7 +140,7 @@ exports.groupedbyProductTotalCost = function(products) {
   return prodPriceMap;
 }
 
-exports.getMostProfitableProductSold = function(prodTotalCost) {
+exports.getMostProfitable = function(prodTotalCost) {
   var maxValue = 0;
   var maxProduct = undefined;
 
@@ -150,6 +150,6 @@ exports.getMostProfitableProductSold = function(prodTotalCost) {
       maxProduct = prod;
     }
   }
-  console.log("The most profitable product is " + maxProduct + " with a value of " + maxValue);
+  console.log("The most profitable is " + maxProduct + " with a value of " + maxValue);
   return maxProduct;
 }
