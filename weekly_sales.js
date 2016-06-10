@@ -87,10 +87,8 @@ exports.createProductCategoriesMap = function(productData, categoryData) {
     var quantity = productData[prod];
     if (catProdMap[category] === undefined) {
       catProdMap[category] = 0;
-      // console.log(" initialising - catProdMap : " + category);
     }
     catProdMap[category] += Number(quantity);
-    // console.log("Adding to - catProdMap : " + category + " " + catProdMap[category]);
   }
   console.log(catProdMap);
   return catProdMap;
@@ -123,3 +121,39 @@ exports.getLeastPopularCategory = function(catProdMap) {
   console.log("The least popular category is " + minCat + " (with a value of " + minValue + ")");
   return minCat;
 }
+
+exports.groupedbyProductTotalCost = function(products) {
+  var prodPriceMap = {};
+
+  products.forEach(function(product) {
+    var delimitedData = product.split(',');
+    var Stock_item = delimitedData[2];
+    var No_sold = delimitedData[3];
+    var Price = delimitedData[4].replace(/R/g, "");
+    var totalCost = Number(No_sold * Price);
+    console.log('Stock_item:' + Stock_item + 'No_sold : ' + No_sold + ' Price : ' + Price + ' totalCost :' + totalCost);
+    if (prodPriceMap[Stock_item] === undefined) {
+      prodPriceMap[Stock_item] === 0;
+    }
+    prodPriceMap[Stock_item] += Number(totalCost);
+  });
+  console.log(prodPriceMap);
+  return prodPriceMap;
+}
+
+// exports.groupedByProductName = function(products) {
+//   var productData = {};
+//
+//   products.forEach(function(product) {
+//     var delimitedData = product.split(',');
+//     var Stock_item = delimitedData[2];
+//     var No_Sold = delimitedData[3];
+//     if (productData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
+//       productData[Stock_item] = 0; // initialising
+//     }
+//     productData[Stock_item] += Number(No_Sold); //
+//   });
+//
+//   console.log(productData);
+//   return productData;
+// };

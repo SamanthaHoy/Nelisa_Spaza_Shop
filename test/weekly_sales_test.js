@@ -193,4 +193,12 @@ describe("Accessing and writing functions for the week's csv file", function() {
     assert.equal(result1,result2);
   });
 
+  it ("it should return the data grouped by product and total cost",function(){
+    var products = allProducts.weeklySales(1);
+
+    var result1 = allProducts.groupedbyProductTotalCost(products);
+    var result2 = 'somthing';
+    assert.deepEqual(result1,result2);
+  });
+
 });
