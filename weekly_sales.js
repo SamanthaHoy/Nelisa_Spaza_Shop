@@ -130,30 +130,26 @@ exports.groupedbyProductTotalCost = function(products) {
     var Stock_item = delimitedData[2];
     var No_sold = delimitedData[3];
     var Price = delimitedData[4].replace(/R/g, "");
-    var totalCost = Number(No_sold * Price);
-    console.log('Stock_item:' + Stock_item + 'No_sold : ' + No_sold + ' Price : ' + Price + ' totalCost :' + totalCost);
+    var totalCost = parseFloat(No_sold * Price);
     if (prodPriceMap[Stock_item] === undefined) {
-      prodPriceMap[Stock_item] === 0;
+      prodPriceMap[Stock_item] = 0;
     }
-    prodPriceMap[Stock_item] += Number(totalCost);
+    prodPriceMap[Stock_item] += totalCost;
   });
   console.log(prodPriceMap);
   return prodPriceMap;
 }
 
-// exports.groupedByProductName = function(products) {
-//   var productData = {};
-//
-//   products.forEach(function(product) {
-//     var delimitedData = product.split(',');
-//     var Stock_item = delimitedData[2];
-//     var No_Sold = delimitedData[3];
-//     if (productData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
-//       productData[Stock_item] = 0; // initialising
-//     }
-//     productData[Stock_item] += Number(No_Sold); //
-//   });
-//
-//   console.log(productData);
-//   return productData;
-// };
+exports.getMostProfitableProductSold = function(prodTotalCost) {
+  var maxValue = 0;
+  var maxProduct = undefined;
+
+  for (var prod in prodTotalCost) {
+    if (prodTotalCost[prod] > maxValue) {
+      maxValue = prodTotalCost[prod];
+      maxProduct = prod;
+    }
+  }
+  console.log("The most profitable product is " + maxProduct + " with a value of " + maxValue);
+  return maxProduct;
+}

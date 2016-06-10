@@ -197,8 +197,43 @@ describe("Accessing and writing functions for the week's csv file", function() {
     var products = allProducts.weeklySales(1);
 
     var result1 = allProducts.groupedbyProductTotalCost(products);
-    var result2 = 'somthing';
-    assert.deepEqual(result1,result2);
+    var result2 = { 'Milk 1l': 390,
+        Imasi: 750,
+        Bread: 540,
+        'Chakalaka Can': 230,
+        'Gold Dish Vegetable Curry Can': 153,
+        'Fanta 500ml': 214.5,
+        'Coke 500ml': 351,
+        'Cream Soda 500ml': 165,
+        'Iwisa Pap 5kg': 510,
+        'Top Class Soy Mince': 264,
+        'Shampoo 1 litre': 90,
+        'Soap Bar': 72,
+        'Bananas - loose': 94,
+        'Apples - loose': 72,
+        'Mixed Sweets 5s': 120 };
+      assert.deepEqual(result1,result2);
   });
+
+  it("it should return the most profitable product per week",function(){
+    var prodTotalCost = { 'Milk 1l': 390,
+        Imasi: 750,
+        Bread: 540,
+        'Chakalaka Can': 230,
+        'Gold Dish Vegetable Curry Can': 153,
+        'Fanta 500ml': 214.5,
+        'Coke 500ml': 351,
+        'Cream Soda 500ml': 165,
+        'Iwisa Pap 5kg': 510,
+        'Top Class Soy Mince': 264,
+        'Shampoo 1 litre': 90,
+        'Soap Bar': 72,
+        'Bananas - loose': 94,
+        'Apples - loose': 72,
+        'Mixed Sweets 5s': 120 };
+    result1 = allProducts.getMostProfitableProductSold(prodTotalCost);
+    result2 = 'Imasi';
+    assert.equal(result1,result2);
+  })
 
 });
