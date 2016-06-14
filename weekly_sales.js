@@ -1,5 +1,4 @@
 // finds the weekly sales
-
 exports.weeklySales = function(week) {
   var fs = require('fs'); // imports the csv file
   var fileContent = fs.readFileSync('./files/week' + week + '.csv', 'utf8'); /* gets the content of all the files from the pathname */
@@ -11,12 +10,12 @@ exports.weeklySales = function(week) {
   return products;
 };
 
-
 exports.groupedByProductName = function(products) {
   var productData = {};
 
   products.forEach(function(product) {
     var delimitedData = product.split(',');
+    // var date = delimitedData[1];
     var Stock_item = delimitedData[2];
     var No_Sold = delimitedData[3];
     if (productData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
@@ -24,7 +23,6 @@ exports.groupedByProductName = function(products) {
     }
     productData[Stock_item] += Number(No_Sold); //
   });
-
   console.log(productData);
   return productData;
 };
@@ -104,7 +102,7 @@ exports.getMostPopularCategory = function(catProdMap) {
       maxCat = cat;
     }
   }
-  console.log("The most popular category is " + maxCat + " (with a value of " + maxValue + ")");
+  console.log("The most popular category is " + maxCat + " (with a value of R" + maxValue + ")");
   return maxCat;
 }
 
@@ -118,38 +116,93 @@ exports.getLeastPopularCategory = function(catProdMap) {
       minCat = cat;
     }
   }
-  console.log("The least popular category is " + minCat + " (with a value of " + minValue + ")");
+  console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
   return minCat;
 }
 
-exports.groupedbyProductTotalCost = function(products) {
-  var prodPriceMap = {};
+//gets the week's purchase data into a map format
+exports.getWeeklyPurchaseData = function(week) {
+  var fs = require('fs'); // imports the csv file
+  var fileContent = fs.readFileSync('./files/purchases.csv', 'utf8');
+  var products = fileContent.split('\n').slice(1, -1); /* splits the content by the new line character , ignores 1st and last lines*/
+  // Shop;Date;Item;Quantity;Cost;Total Cost
+  var weeklyPurchasesMap = {};
 
   products.forEach(function(product) {
     var delimitedData = product.split(',');
+    var date = delimitedData[1];
     var Stock_item = delimitedData[2];
-    var No_sold = delimitedData[3];
-    var Price = delimitedData[4].replace(/R/g, "");
-    var totalCost = parseFloat(No_sold * Price);
-    if (prodPriceMap[Stock_item] === undefined) {
-      prodPriceMap[Stock_item] = 0;
-    }
-    prodPriceMap[Stock_item] += totalCost;
-  });
-  console.log(prodPriceMap);
-  return prodPriceMap;
-}
+    var totalPurchaseCost = delimitedData[5];
 
-exports.getMostProfitable = function(prodTotalCost) {
-  var maxValue = 0;
-  var maxProduct = undefined;
+    // switch (week) {
+    //   case 1:
+    //     if (date >= '23-Jan' && date < '28-Jan') {
+    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
+    //         weeklyPurchasesMap[Stock_item] = 0
+    //       }
+    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
+    //     }
+    //     break;
+    //   case 2:
+    //     if (date >= '02-Feb' && date < '08-Feb') {
+    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
+    //         weeklyPurchasesMap[Stock_item] = 0
+    //       }
+    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
+    //     }
+    //     break;
+    //   case 3:
+    //     if (date >= '23-Jan' && date < '28-Jan') {
+    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
+    //         weeklyPurchasesMap[Stock_item] = 0
+    //       }
+    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
+    //     }
+    //     break;
+    //   case 4:
+    //     if (date >= '23-Jan' && date < '28-Jan') {
+    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
+    //         weeklyPurchasesMap[Stock_item] = 0
+    //       }
+    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
+    //     }
+    //     break;
+    //
+    // }
 
-  for (var prod in prodTotalCost) {
-    if (prodTotalCost[prod] > maxValue) {
-      maxValue = prodTotalCost[prod];
-      maxProduct = prod;
-    }
-  }
-  console.log("The most profitable is " + maxProduct + " with a value of " + maxValue);
-  return maxProduct;
-}
+
+  })
+  return products;
+};
+
+// exports.groupedbyProductTotalCost = function(products) {
+//   var prodPriceMap = {};
+//
+//   products.forEach(function(product) {
+//     var delimitedData = product.split(',');
+//     var Stock_item = delimitedData[2];
+//     var No_sold = delimitedData[3];
+//     var Price = delimitedData[4].replace(/R/g, "");
+//     var totalCost = parseFloat(No_sold * Price);
+//     if (prodPriceMap[Stock_item] === undefined) {
+//       prodPriceMap[Stock_item] = 0;
+//     }
+//     prodPriceMap[Stock_item] += totalCost;
+//   });
+//   console.log(prodPriceMap);
+//   return prodPriceMap;
+// }
+
+// exports.getMostProfitable = function(prodTotalCost) {
+//   var maxValue = 0;
+//   var maxProduct = undefined;
+//
+//   for (var prod in prodTotalCost) {
+//     if (prodTotalCost[prod] > maxValue) {
+//       maxValue = prodTotalCost[prod];
+//       maxProduct = prod;
+//     }
+//   }
+//   console.log("The most profitable is " + maxProduct + " with a value of " + maxValue);
+//   return maxProduct;
+// }
