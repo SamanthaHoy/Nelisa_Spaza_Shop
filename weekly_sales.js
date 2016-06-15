@@ -12,16 +12,24 @@ exports.weeklySales = function(week) {
 
 exports.groupedByProductName = function(products) {
   var productData = {};
+  var firstProductLine = products[0].split(','); // gets the first line
+  var prodDate = firstProductLine[1]; // gets the date from the first line
+  var startDate = new Date(prodDate); // converts it to date format
+  var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
+  console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
 
   products.forEach(function(product) {
     var delimitedData = product.split(',');
-    // var date = delimitedData[1];
+    var date = delimitedData[1];
+    var currentDate = new Date(date);
     var Stock_item = delimitedData[2];
     var No_Sold = delimitedData[3];
-    if (productData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
-      productData[Stock_item] = 0; // initialising
+    if (currentDate >= startDate && currentDate <= endDate) {
+      if (productData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
+        productData[Stock_item] = 0; // initialising
+      }
+      productData[Stock_item] += Number(No_Sold);
     }
-    productData[Stock_item] += Number(No_Sold); //
   });
   console.log(productData);
   return productData;
@@ -119,61 +127,6 @@ exports.getLeastPopularCategory = function(catProdMap) {
   console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
   return minCat;
 }
-
-//gets the week's purchase data into a map format
-exports.getWeeklyPurchaseData = function(week) {
-  var fs = require('fs'); // imports the csv file
-  var fileContent = fs.readFileSync('./files/purchases.csv', 'utf8');
-  var products = fileContent.split('\n').slice(1, -1); /* splits the content by the new line character , ignores 1st and last lines*/
-  // Shop;Date;Item;Quantity;Cost;Total Cost
-  var weeklyPurchasesMap = {};
-
-  products.forEach(function(product) {
-    var delimitedData = product.split(',');
-    var date = delimitedData[1];
-    var Stock_item = delimitedData[2];
-    var totalPurchaseCost = delimitedData[5];
-
-    // switch (week) {
-    //   case 1:
-    //     if (date >= '23-Jan' && date < '28-Jan') {
-    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
-    //         weeklyPurchasesMap[Stock_item] = 0
-    //       }
-    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
-    //     }
-    //     break;
-    //   case 2:
-    //     if (date >= '02-Feb' && date < '08-Feb') {
-    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
-    //         weeklyPurchasesMap[Stock_item] = 0
-    //       }
-    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
-    //     }
-    //     break;
-    //   case 3:
-    //     if (date >= '23-Jan' && date < '28-Jan') {
-    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
-    //         weeklyPurchasesMap[Stock_item] = 0
-    //       }
-    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
-    //     }
-    //     break;
-    //   case 4:
-    //     if (date >= '23-Jan' && date < '28-Jan') {
-    //       if (weeklyPurchasesMap[Stock_item] === undefined) {
-    //         weeklyPurchasesMap[Stock_item] = 0
-    //       }
-    //       weeklyPurchasesMap[Stock_item] += totalPurchaseCost;
-    //     }
-    //     break;
-    //
-    // }
-
-
-  })
-  return products;
-};
 
 // exports.groupedbyProductTotalCost = function(products) {
 //   var prodPriceMap = {};

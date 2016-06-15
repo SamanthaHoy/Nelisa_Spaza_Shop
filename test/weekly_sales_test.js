@@ -13,11 +13,11 @@ describe("Accessing and writing functions for the week's csv file", function() {
     assert.equal(readFile.length, 105);
   });
 
-  it("it should find the week4's file ", function() {
-    var readFile = allProducts.weeklySales(4);
-    console.log(readFile);
-    assert.equal(readFile.length, 120);
-  });
+  // it("it should find the week4's file ", function() {
+  //   var readFile = allProducts.weeklySales(4);
+  //   console.log(readFile);
+  //   assert.equal(readFile.length, 120);
+  // });
 
   it("it should return unique list of products", function() {
     var products = allProducts.weeklySales(1);
@@ -194,31 +194,87 @@ describe("Accessing and writing functions for the week's csv file", function() {
     assert.equal(result1,result2);
   });
 
-  it("should return the grouped purchases data for week4's file",function(){
-    var result1 = mostProfitable.getWeeklyPurchaseData(4);
-    var result2 = { 'Chakalaka Can': 227.5,
-  'Bananas - loose': 20,
-  'Apples - loose': 225,
-  'Mixed Sweets 5s': 24,
-  Bread: 326,
-  'Coke 500ml': 147,
-  'Cream Soda 500ml': 81,
-  'Fanta 500ml': 94,
-  'Gold Dish Vegetable Curry Can': 150.5,
-  Imasi: 510,
-  'Milk 1l': 280,
-  'Top Class Soy Mince': 295,
-  'Soap Bar': 54,
-  'Shampoo 1 litre': 180,
-  'Iwisa Pap 5kg': 230 };
+  it("should return the grouped purchases product data with the unit cost price for week1's file",function(){
+    var result1 = mostProfitable.getWeeklyPurchaseData(1);
+    var result2 =
+      { 'Bananas - loose': 1,
+     'Apples - loose': 1.5,
+     'Mixed Sweets 5s': 3,
+     'Shampoo 1 litre': 20,
+     'Soap Bar': 3,
+     Bread: 9,
+     'Chakalaka Can': 7,
+     'Coke 500ml': 3.5,
+     'Cream Soda 500ml': 4.5,
+     'Fanta 500ml': 4.5,
+     'Gold Dish Vegetable Curry Can': 5,
+     Imasi: 17,
+     'Iwisa Pap 5kg': 20,
+     'Milk 1l': 7,
+     'Top Class Soy Mince': 8 };
+     assert.deepEqual(result1,result2);
+  });
+
+  it ("it should return a product map with the total purchase price per product",function(){
+    var prodData = {
+      'Milk 1l': 39,
+      Imasi: 30,
+      Bread: 45,
+      'Chakalaka Can': 23,
+      'Gold Dish Vegetable Curry Can': 17,
+      'Fanta 500ml': 33,
+      'Coke 500ml': 54,
+      'Cream Soda 500ml': 22,
+      'Iwisa Pap 5kg': 17,
+      'Top Class Soy Mince': 22,
+      'Shampoo 1 litre': 3,
+      'Soap Bar': 12,
+      'Bananas - loose': 47,
+      'Apples - loose': 36,
+      'Mixed Sweets 5s': 49
+    };
+    var purchasesUnitCost  =
+      { 'Bananas - loose': 1,
+     'Apples - loose': 1.5,
+     'Mixed Sweets 5s': 3,
+     'Shampoo 1 litre': 20,
+     'Soap Bar': 3,
+     Bread: 9,
+     'Chakalaka Can': 7,
+     'Coke 500ml': 3.5,
+     'Cream Soda 500ml': 4.5,
+     'Fanta 500ml': 4.5,
+     'Gold Dish Vegetable Curry Can': 5,
+     Imasi: 17,
+     'Iwisa Pap 5kg': 20,
+     'Milk 1l': 7,
+     'Top Class Soy Mince': 8 };
+     result1 = mostProfitable.getPurchasePriceData(prodData,purchasesUnitCost);
+     result2 = { 'Milk 1l': 273,
+   Imasi: 510,
+   Bread: 405,
+  'Chakalaka Can': 161,
+  'Gold Dish Vegetable Curry Can': 85,
+  'Fanta 500ml': 148.5,
+  'Coke 500ml': 189,
+  'Cream Soda 500ml': 99,
+  'Iwisa Pap 5kg': 340,
+  'Top Class Soy Mince': 176,
+  'Shampoo 1 litre': 60,
+  'Soap Bar': 36,
+  'Bananas - loose': 47,
+  'Apples - loose': 54,
+  'Mixed Sweets 5s': 147 };
+     assert.deepEqual(result1,result2);
+  });
+
+  it ("it should return the sales data for products for the week",function(){
+    var productData = ; // product sales data 
+    var result1 = mostProfitable.getSalesData(prodData);
+    var result2 = 'something';
     assert.deepEqual(result1,result2);
   });
 
-  it("should return the week's purchase data",function(){
-    var readFile = mostProfitable.getWeeklyPurchaseData(4);
-    var result1 = mostProfitable.getWeeksData(readFile,4);
-    assert.equal(readFile.length, 153);
-  });
 
   // it ("it should return the data grouped by product and total cost",function(){
   //   var products = allProducts.weeklySales(1);
