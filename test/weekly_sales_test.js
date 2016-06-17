@@ -102,7 +102,7 @@ describe("Accessing and writing functions for the week's csv file", function() {
       { 'Milk 1l': 'Dairy',
       Imasi: 'Dairy',
       Bread: 'Bakery',
-      'Chakalaka Can': 'Non-Perishable food',
+      'Chakalaka Can': 'Non-perishable food',
       'Gold Dish Vegetable Curry Can': 'Non-perishable food',
       'Fanta 500ml': 'Drinks',
       'Coke 500ml': 'Drinks',
@@ -195,7 +195,8 @@ describe("Accessing and writing functions for the week's csv file", function() {
   });
 
   it("should return the grouped purchases product data with the unit cost price for week1's file",function(){
-    var result1 = mostProfitable.getWeeklyPurchaseData(1);
+    var dateArray = mostProfitable.getPurchasesDateRange(1);
+    var result1 = mostProfitable.getWeeklyPurchaseData(dateArray);
     var result2 =
       { 'Bananas - loose': 1,
      'Apples - loose': 1.5,
@@ -249,32 +250,96 @@ describe("Accessing and writing functions for the week's csv file", function() {
      'Iwisa Pap 5kg': 20,
      'Milk 1l': 7,
      'Top Class Soy Mince': 8 };
-     result1 = mostProfitable.getPurchasePriceData(prodData,purchasesUnitCost);
-     result2 = { 'Milk 1l': 273,
-   Imasi: 510,
-   Bread: 405,
-  'Chakalaka Can': 161,
-  'Gold Dish Vegetable Curry Can': 85,
-  'Fanta 500ml': 148.5,
-  'Coke 500ml': 189,
-  'Cream Soda 500ml': 99,
-  'Iwisa Pap 5kg': 340,
-  'Top Class Soy Mince': 176,
-  'Shampoo 1 litre': 60,
-  'Soap Bar': 36,
-  'Bananas - loose': 47,
-  'Apples - loose': 54,
-  'Mixed Sweets 5s': 147 };
+     var result1 = mostProfitable.getPurchasePriceData(prodData,purchasesUnitCost);
+     var result2 = {
+      'Milk 1l': 273,
+      Imasi: 510,
+      Bread: 405,
+      'Chakalaka Can': 161,
+      'Gold Dish Vegetable Curry Can': 85,
+      'Fanta 500ml': 148.5,
+      'Coke 500ml': 189,
+      'Cream Soda 500ml': 99,
+      'Iwisa Pap 5kg': 340,
+      'Top Class Soy Mince': 176,
+      'Shampoo 1 litre': 60,
+      'Soap Bar': 36,
+      'Bananas - loose': 47,
+      'Apples - loose': 54,
+      'Mixed Sweets 5s': 147 };
      assert.deepEqual(result1,result2);
   });
 
   it ("it should return the sales data for products for the week",function(){
-    var productData = ; // product sales data 
-    var result1 = mostProfitable.getSalesData(prodData);
-    var result2 = 'something';
+    var productData = allProducts.weeklySales(1); // product sales data
+    var result1 = mostProfitable.groupedbyProductTotalSales(productData);
+    var result2 = {
+  'Milk 1l': 390,
+  Imasi: 750,
+  Bread: 540,
+  'Chakalaka Can': 230,
+  'Gold Dish Vegetable Curry Can': 153,
+  'Fanta 500ml': 214.5,
+  'Coke 500ml': 351,
+  'Cream Soda 500ml': 165,
+  'Iwisa Pap 5kg': 510,
+  'Top Class Soy Mince': 264,
+  'Shampoo 1 litre': 90,
+  'Soap Bar': 72,
+  'Bananas - loose': 94,
+  'Apples - loose': 72,
+  'Mixed Sweets 5s': 120 };
     assert.deepEqual(result1,result2);
   });
 
+  it ("it should return the most profitable product" , function (){
+    var totalSalesData = {
+  'Milk 1l': 390,
+  Imasi: 750,
+  Bread: 540,
+  'Chakalaka Can': 230,
+  'Gold Dish Vegetable Curry Can': 153,
+  'Fanta 500ml': 214.5,
+  'Coke 500ml': 351,
+  'Cream Soda 500ml': 165,
+  'Iwisa Pap 5kg': 510,
+  'Top Class Soy Mince': 264,
+  'Shampoo 1 litre': 90,
+  'Soap Bar': 72,
+  'Bananas - loose': 94,
+  'Apples - loose': 72,
+  'Mixed Sweets 5s': 120 };
+  var totalPurchasesData = {
+     'Milk 1l': 273,
+      Imasi: 510,
+      Bread: 405,
+      'Chakalaka Can': 161,
+      'Gold Dish Vegetable Curry Can': 85,
+      'Fanta 500ml': 148.5,
+      'Coke 500ml': 189,
+      'Cream Soda 500ml': 99,
+      'Iwisa Pap 5kg': 340,
+      'Top Class Soy Mince': 176,
+      'Shampoo 1 litre': 60,
+      'Soap Bar': 36,
+      'Bananas - loose': 47,
+      'Apples - loose': 54,
+      'Mixed Sweets 5s': 147 };
+  var profitMap = mostProfitable.getWeeklyProfit(totalSalesData,totalPurchasesData);
+  var result1 = mostProfitable.getMostProfitable(profitMap);
+  var result2 = 'Imasi';
+  assert.equal(result1,result2);
+  });
+
+  it("it should return the purchase dates", function (){
+  var dateArray = mostProfitable.getPurchasesDateRange(1);
+  console.log("dateArray: " + dateArray);
+  var products = allProducts.weeklySales(1);// gets all products
+  var prodData = allProducts.groupedByProductQtyandTotal(products);
+  var readFile = allProducts.getCategoriesFile();
+  var catData = allProducts.createCategoryMap(readFile);
+  var prodCatQtymap = allProducts.createProductCategoriesMap(prodData,catData);
+  });
 
   // it ("it should return the data grouped by product and total cost",function(){
   //   var products = allProducts.weeklySales(1);

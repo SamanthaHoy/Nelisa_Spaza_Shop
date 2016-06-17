@@ -35,6 +35,40 @@ exports.groupedByProductName = function(products) {
   return productData;
 };
 
+exports.groupedByProductQtyandTotal = function(products) {
+  var productQtyData = {};
+  var productSalesTotalsData = {};
+  var firstProductLine = products[0].split(','); // gets the first line
+  var prodDate = firstProductLine[1]; // gets the date from the first line
+  var startDate = new Date(prodDate); // converts it to date format
+  var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
+  console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
+
+  products.forEach(function(product) {
+    var delimitedData = product.split(',');
+    var date = delimitedData[1];
+    var currentDate = new Date(date);
+    var Stock_item = delimitedData[2];
+    var No_Sold = delimitedData[3];
+    var price = delimitedData[4].replace(/R/g, "");
+    var salesPrice = Number(No_Sold) * Number(price);
+    console.log("Stock_item: " + Stock_item + " No_Sold: " + No_Sold + " price: " + price + " salesPrice: " + salesPrice);
+    if (currentDate >= startDate && currentDate <= endDate) {
+      if (productQtyData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
+        productQtyData[Stock_item] = 0; // initialising
+        productSalesTotalsData[Stock_item] = 0;
+      }
+      productQtyData[Stock_item] += Number(No_Sold);
+      productSalesTotalsData[Stock_item] += Number(salesPrice);
+    }
+  });
+  console.log("Product Quantity Data");
+  console.log(productQtyData);
+  console.log("Product Sales Total Data");
+  console.log(productSalesTotalsData);
+  return productQtyData;
+};
+
 exports.mostPopularProductSold = function(productData) {
   var maxValue = 0;
   var mostPopularProduct = undefined;
@@ -81,6 +115,7 @@ exports.createCategoryMap = function(categories) {
       categoryData[Stock_item] = Category; // initialising
     }
   });
+  console.log("Product category data");
   console.log(categoryData);
   return categoryData;
 };
@@ -96,6 +131,7 @@ exports.createProductCategoriesMap = function(productData, categoryData) {
     }
     catProdMap[category] += Number(quantity);
   }
+  console.log("Grouped Category Map");
   console.log(catProdMap);
   return catProdMap;
 };
@@ -127,35 +163,3 @@ exports.getLeastPopularCategory = function(catProdMap) {
   console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
   return minCat;
 }
-
-// exports.groupedbyProductTotalCost = function(products) {
-//   var prodPriceMap = {};
-//
-//   products.forEach(function(product) {
-//     var delimitedData = product.split(',');
-//     var Stock_item = delimitedData[2];
-//     var No_sold = delimitedData[3];
-//     var Price = delimitedData[4].replace(/R/g, "");
-//     var totalCost = parseFloat(No_sold * Price);
-//     if (prodPriceMap[Stock_item] === undefined) {
-//       prodPriceMap[Stock_item] = 0;
-//     }
-//     prodPriceMap[Stock_item] += totalCost;
-//   });
-//   console.log(prodPriceMap);
-//   return prodPriceMap;
-// }
-
-// exports.getMostProfitable = function(prodTotalCost) {
-//   var maxValue = 0;
-//   var maxProduct = undefined;
-//
-//   for (var prod in prodTotalCost) {
-//     if (prodTotalCost[prod] > maxValue) {
-//       maxValue = prodTotalCost[prod];
-//       maxProduct = prod;
-//     }
-//   }
-//   console.log("The most profitable is " + maxProduct + " with a value of " + maxValue);
-//   return maxProduct;
-// }
