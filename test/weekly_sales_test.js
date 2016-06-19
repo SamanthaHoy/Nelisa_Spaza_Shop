@@ -1,5 +1,4 @@
-// takes a sentence as a parameter and returns the sum of the length of words in it
-
+//
 var allProducts = require('../weekly_sales');
 var mostProfitable = require('../most_profitable');
 var assert = require('assert');
@@ -331,113 +330,22 @@ describe("Accessing and writing functions for the week's csv file", function() {
   assert.equal(result1,result2);
   });
 
-  it("it should return the purchase dates", function (){
-  var dateArray = mostProfitable.getPurchasesDateRange(1);
-  console.log("dateArray: " + dateArray);
-  var products = allProducts.weeklySales(1);// gets all products
-  var prodData = allProducts.groupedByProductQtyandTotal(products);
-  var readFile = allProducts.getCategoriesFile();
-  var catData = allProducts.createCategoryMap(readFile);
-  var prodCatQtymap = allProducts.createProductCategoriesMap(prodData,catData);
-  });
+it("it should return the most profitable category", function (){
+var products = allProducts.weeklySales(1); // gets all product data
+var productData = allProducts.groupedByProductName(products); // gets all product quantities
+var totalSalesData = mostProfitable.groupedbyProductTotalSales(products); // get total product sales
+var dateArray = mostProfitable.getPurchasesDateRange(1); // gets the dates
+console.log("dateArray: " + dateArray);
+var purchasesUnitCost = mostProfitable.getWeeklyPurchaseData(dateArray); // gets purchases unit cost
+var totalPurchasesData = mostProfitable.getPurchasePriceData(productData,purchasesUnitCost); // get total purchases sales
+var profitMap = mostProfitable.getWeeklyProfit(totalSalesData,totalPurchasesData); // gets the weekly profit
 
-  // it ("it should return the data grouped by product and total cost",function(){
-  //   var products = allProducts.weeklySales(1);
-  //
-  //   var result1 = allProducts.groupedbyProductTotalCost(products);
-  //   var result2 = { 'Milk 1l': 390,
-  //       Imasi: 750,
-  //       Bread: 540,
-  //       'Chakalaka Can': 230,
-  //       'Gold Dish Vegetable Curry Can': 153,
-  //       'Fanta 500ml': 214.5,
-  //       'Coke 500ml': 351,
-  //       'Cream Soda 500ml': 165,
-  //       'Iwisa Pap 5kg': 510,
-  //       'Top Class Soy Mince': 264,
-  //       'Shampoo 1 litre': 90,
-  //       'Soap Bar': 72,
-  //       'Bananas - loose': 94,
-  //       'Apples - loose': 72,
-  //       'Mixed Sweets 5s': 120 };
-  //     assert.deepEqual(result1,result2);
-  // });
-  //
-  // it("it should return the most profitable product per week",function(){
-  //   var prodTotalCost = { 'Milk 1l': 390,
-  //       Imasi: 750,
-  //       Bread: 540,
-  //       'Chakalaka Can': 230,
-  //       'Gold Dish Vegetable Curry Can': 153,
-  //       'Fanta 500ml': 214.5,
-  //       'Coke 500ml': 351,
-  //       'Cream Soda 500ml': 165,
-  //       'Iwisa Pap 5kg': 510,
-  //       'Top Class Soy Mince': 264,
-  //       'Shampoo 1 litre': 90,
-  //       'Soap Bar': 72,
-  //       'Bananas - loose': 94,
-  //       'Apples - loose': 72,
-  //       'Mixed Sweets 5s': 120 };
-  //   result1 = allProducts.getMostProfitable(prodTotalCost);
-  //   result2 = 'Imasi';
-  //   assert.equal(result1,result2);
-  // });
-  //
-  // it("it should return a map of grouped Category and Total costs data", function (){
-  //       var prodTotalCostData = { 'Milk 1l': 390,
-  //       Imasi: 750,
-  //       Bread: 540,
-  //       'Chakalaka Can': 230,
-  //       'Gold Dish Vegetable Curry Can': 153,
-  //       'Fanta 500ml': 214.5,
-  //       'Coke 500ml': 351,
-  //       'Cream Soda 500ml': 165,
-  //       'Iwisa Pap 5kg': 510,
-  //       'Top Class Soy Mince': 264,
-  //       'Shampoo 1 litre': 90,
-  //       'Soap Bar': 72,
-  //       'Bananas - loose': 94,
-  //       'Apples - loose': 72,
-  //       'Mixed Sweets 5s': 120 };
-  //       var catData =
-  //         { 'Milk 1l': 'Dairy',
-  //        Imasi: 'Dairy',
-  //        Bread: 'Bakery',
-  //        'Chakalaka Can': 'Non-perishable food',
-  //        'Gold Dish Vegetable Curry Can': 'Non-perishable food',
-  //        'Fanta 500ml': 'Drinks',
-  //        'Coke 500ml': 'Drinks',
-  //        'Cream Soda 500ml': 'Drinks',
-  //        'Iwisa Pap 5kg': 'Non-perishable food',
-  //        'Top Class Soy Mince': 'Non-perishable food',
-  //        'Shampoo 1 litre': 'Toiletries',
-  //        'Soap Bar': 'Toiletries',
-  //        'Bananas - loose': 'Fruit',
-  //        'Apples - loose': 'Fruit',
-  //        'Mixed Sweets 5s': 'Sweets' };
-  //        result1 = allProducts.createProductCategoriesMap(prodTotalCostData,catData);
-  //        result2 = { Dairy: 1140,
-  //             Bakery: 540,
-  //             'Non-perishable food': 1157,
-  //             Drinks: 730.5,
-  //             Toiletries: 162,
-  //             Fruit: 166,
-  //             Sweets: 120 };
-  //        assert.deepEqual(result1,result2);
-  // });
-  //
-  // it("it should return the most profitable category sold per week",function (){
-  //   var catData = { Dairy: 1140,
-  //        Bakery: 540,
-  //        'Non-perishable food': 1157,
-  //        Drinks: 730.5,
-  //        Toiletries: 162,
-  //        Fruit: 166,
-  //        Sweets: 120 };
-  //        result1 = allProducts.getMostProfitable(catData);
-  //        result2 = 'Non-perishable food';
-  //        assert.equal(result1,result2);
-  // });
+var readFile = allProducts.getCategoriesFile(); // reads in the categories file
+var catData = allProducts.createCategoryMap(readFile); // creates a category map
+var catProdMap = allProducts.createProductCategoriesMap(profitMap,catData); // returns 1 map of category total sales
+var result1 = mostProfitable.getMostProfitable(catProdMap); // returns the most popular category
+var result2 = 'Non-perishable food';
+assert.equal(result1,result2);
+});
 
 });

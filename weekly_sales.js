@@ -35,40 +35,6 @@ exports.groupedByProductName = function(products) {
   return productData;
 };
 
-exports.groupedByProductQtyandTotal = function(products) {
-  var productQtyData = {};
-  var productSalesTotalsData = {};
-  var firstProductLine = products[0].split(','); // gets the first line
-  var prodDate = firstProductLine[1]; // gets the date from the first line
-  var startDate = new Date(prodDate); // converts it to date format
-  var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
-  console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
-
-  products.forEach(function(product) {
-    var delimitedData = product.split(',');
-    var date = delimitedData[1];
-    var currentDate = new Date(date);
-    var Stock_item = delimitedData[2];
-    var No_Sold = delimitedData[3];
-    var price = delimitedData[4].replace(/R/g, "");
-    var salesPrice = Number(No_Sold) * Number(price);
-    console.log("Stock_item: " + Stock_item + " No_Sold: " + No_Sold + " price: " + price + " salesPrice: " + salesPrice);
-    if (currentDate >= startDate && currentDate <= endDate) {
-      if (productQtyData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
-        productQtyData[Stock_item] = 0; // initialising
-        productSalesTotalsData[Stock_item] = 0;
-      }
-      productQtyData[Stock_item] += Number(No_Sold);
-      productSalesTotalsData[Stock_item] += Number(salesPrice);
-    }
-  });
-  console.log("Product Quantity Data");
-  console.log(productQtyData);
-  console.log("Product Sales Total Data");
-  console.log(productSalesTotalsData);
-  return productQtyData;
-};
-
 exports.mostPopularProductSold = function(productData) {
   var maxValue = 0;
   var mostPopularProduct = undefined;
@@ -79,7 +45,9 @@ exports.mostPopularProductSold = function(productData) {
       mostPopularProduct = key;
     }
   }
+  console.log("=================================================================================");
   console.log("The mostPopularProduct sold is :" + mostPopularProduct + " with a quantity of : " + maxValue);
+  console.log("=================================================================================");
   return mostPopularProduct;
 };
 
@@ -93,7 +61,9 @@ exports.leastPopularProductSold = function(productData) {
       leastPopularProduct = key;
     }
   }
+  console.log("=================================================================================");
   console.log("The least popular product is :" + leastPopularProduct + " with a quantity of :" + minValue);
+  console.log("=================================================================================");
   return leastPopularProduct;
 };
 
@@ -146,7 +116,9 @@ exports.getMostPopularCategory = function(catProdMap) {
       maxCat = cat;
     }
   }
+  console.log("=================================================================================");
   console.log("The most popular category is " + maxCat + " (with a value of R" + maxValue + ")");
+  console.log("=================================================================================");
   return maxCat;
 }
 
@@ -160,6 +132,8 @@ exports.getLeastPopularCategory = function(catProdMap) {
       minCat = cat;
     }
   }
+  console.log("=================================================================================");
   console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
+  console.log("=================================================================================");
   return minCat;
 }
