@@ -15,7 +15,7 @@ exports.getPurchasesDateRange = function(week) {
   var dateArray= [];
   dateArray[0] = startDate;
   dateArray[1] = endDate;
-  console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
+  // console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
   return dateArray;
 }
 
@@ -54,14 +54,14 @@ exports.getWeeklyPurchaseData = function(dateArray) {
     var prodTotalCost = stockTotalCostMap[prod];
     var prodQuantity = stockTotalQuantityMap[prod];
     var prodUnitCost = prodTotalCost / prodQuantity;
-    console.log("prod : " + prod + " totalcost : " + prodTotalCost + " totalquantity : " + prodQuantity);
+    // console.log("prod : " + prod + " totalcost : " + prodTotalCost + " totalquantity : " + prodQuantity);
     if (weeklyProdPurchaseUnitCostMap[prod] === undefined) {
       weeklyProdPurchaseUnitCostMap[prod] = 0;
     }
     weeklyProdPurchaseUnitCostMap[prod] = Math.round(prodUnitCost * 100) / 100; // should round it up to 2 decimal points
   };
-  console.log("weeklyProdPurchaseUnitCostMap : ");
-  console.log(weeklyProdPurchaseUnitCostMap);
+  // console.log("weeklyProdPurchaseUnitCostMap : ");
+  // console.log(weeklyProdPurchaseUnitCostMap);
   return weeklyProdPurchaseUnitCostMap; // product map with unit cost price
 };
 
@@ -77,8 +77,8 @@ exports.getPurchasePriceData = function(productsMap, unitCostMap) {
     }
     productPurchasesMap[prod] = totalPurchaseCost;
   }
-  console.log("The products purchases map with the total cost per product");
-  console.log(productPurchasesMap);
+  // console.log("The products purchases map with the total cost per product");
+  // console.log(productPurchasesMap);
   return productPurchasesMap; // product map with the total cost of the product purchases
 };
 
@@ -97,8 +97,8 @@ exports.groupedbyProductTotalSales = function(products) {
     }
     prodSalesMap[Stock_item] += totalCost;
   });
-  console.log("The sales map with the total cost per product");
-  console.log(prodSalesMap);
+  // console.log("The sales map with the total cost per product");
+  // console.log(prodSalesMap);
   return prodSalesMap; // products map with the total sales of the product sales
 };
 
@@ -109,14 +109,14 @@ exports.getWeeklyProfit = function(totalSalesMap, totalPurchaseMap) {
     var salesTotal = totalSalesMap[prod];
     var purchaseTotal = totalPurchaseMap[prod];
     var profit = salesTotal - purchaseTotal;
-    console.log("prod: " + prod + " salesTotal: " + salesTotal + " purchaseTotal: " + purchaseTotal + " Profit: " + profit);
+    // console.log("prod: " + prod + " salesTotal: " + salesTotal + " purchaseTotal: " + purchaseTotal + " Profit: " + profit);
     if (profitMap[prod] === undefined) {
       profitMap[prod] = 0;
     }
     profitMap[prod] = profit;
   };
-  console.log("Profit map");
-  console.log(profitMap);
+  // console.log("Profit map");
+  // console.log(profitMap);
   return profitMap;
 };
 
@@ -130,72 +130,8 @@ exports.getMostProfitable = function(profitMap) {
       maxProduct = prod;
     }
   }
-  console.log("=================================================================================");
-  console.log("The most profitable is " + maxProduct + " (with a value of R" + maxValue + ")");
-  console.log("=================================================================================");
+  // console.log("=================================================================================");
+  // console.log("The most profitable is " + maxProduct + " (with a value of R" + maxValue + ")");
+  // console.log("=================================================================================");
   return maxProduct;
 };
-
-// exports.groupedByProductQtyandTotal = function(products) {
-//   var prodQtySalesArray = [];
-//   var productQtyData = {};
-//   var productSalesTotalsData = {};
-//   var firstProductLine = products[0].split(','); // gets the first line
-//   var prodDate = firstProductLine[1]; // gets the date from the first line
-//   var startDate = new Date(prodDate); // converts it to date format
-//   var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
-//   console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
-//
-//   products.forEach(function(product) {
-//     var delimitedData = product.split(',');
-//     var date = delimitedData[1];
-//     var currentDate = new Date(date);
-//     var Stock_item = delimitedData[2];
-//     var No_Sold = delimitedData[3];
-//     var price = delimitedData[4].replace(/R/g, "");
-//     var salesPrice = parseFloat(No_Sold * price);
-//     console.log("Stock_item: " + Stock_item + " No_Sold: " + No_Sold + " price: " + price + " salesPrice: " + salesPrice);
-//     if (currentDate >= startDate && currentDate <= endDate) {
-//       if (productQtyData[Stock_item] === undefined) { //if it doesn't exist , add it and assign it a value of 0
-//         productQtyData[Stock_item] = 0; // initialising
-//         productSalesTotalsData[Stock_item] = 0;
-//       }
-//       productQtyData[Stock_item] += Number(No_Sold);
-//       productSalesTotalsData[Stock_item] += Number(salesPrice);
-//     }
-//   });
-//   console.log("Product Quantity Data");
-//   console.log(productQtyData);
-//   console.log("Product Sales Total Data");
-//   console.log(productSalesTotalsData);
-//   prodQtySalesArray[0] = productQtyData ;
-//   prodQtySalesArray[1] = productSalesTotalsData ;
-//   return prodQtySalesArray; // returns 2 maps , 1 for the product quantity and 1 for the product sales total
-// };
-
-// exports.createProductDataCategoriesMap = function(productData, categoryData) {
-//   var productQtyData = productData[0];
-//   var productSalesData = productData[1];
-//   var catProdMap = {};
-//   var totalProdSalesMap = {};
-//
-//   for (var prod in productQtyData) {
-//     var category = categoryData[prod];
-//     var quantity = productQtyData[prod];
-//     var totalProdSales = productSalesData[prod];
-//     if (catProdMap[category] === undefined) {
-//       catProdMap[category] = 0;
-//       totalProdSalesMap[category] = 0;
-//     }
-//     catProdMap[category] += Number(quantity);
-//     totalProdSalesMap[category] += Number(totalProdSales);
-//   }
-//   console.log("Grouped Category Quantity Map");
-//   console.log(catProdMap);
-//   console.log("Grouped Total Sales Map");
-//   console.log(totalProdSalesMap);
-//   var catProdArray = [];
-//   catProdArray[0] = catProdMap;
-//   catProdArray[1] = totalProdSalesMap;
-//   return catProdArray;
-// };

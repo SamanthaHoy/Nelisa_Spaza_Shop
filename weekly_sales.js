@@ -16,7 +16,7 @@ exports.groupedByProductName = function(products) {
   var prodDate = firstProductLine[1]; // gets the date from the first line
   var startDate = new Date(prodDate); // converts it to date format
   var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
-  console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
+  // console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
 
   products.forEach(function(product) {
     var delimitedData = product.split(',');
@@ -31,7 +31,7 @@ exports.groupedByProductName = function(products) {
       productData[Stock_item] += Number(No_Sold);
     }
   });
-  console.log(productData);
+  // console.log(productData);
   return productData;
 };
 
@@ -45,9 +45,9 @@ exports.mostPopularProductSold = function(productData) {
       mostPopularProduct = key;
     }
   }
-  console.log("=================================================================================");
-  console.log("The mostPopularProduct sold is :" + mostPopularProduct + " with a quantity of : " + maxValue);
-  console.log("=================================================================================");
+  // console.log("=================================================================================");
+  // console.log("The mostPopularProduct sold is :" + mostPopularProduct + " with a quantity of : " + maxValue);
+  // console.log("=================================================================================");
   return mostPopularProduct;
 };
 
@@ -61,9 +61,9 @@ exports.leastPopularProductSold = function(productData) {
       leastPopularProduct = key;
     }
   }
-  console.log("=================================================================================");
-  console.log("The least popular product is :" + leastPopularProduct + " with a quantity of :" + minValue);
-  console.log("=================================================================================");
+  // console.log("=================================================================================");
+  // console.log("The least popular product is :" + leastPopularProduct + " with a quantity of :" + minValue);
+  // console.log("=================================================================================");
   return leastPopularProduct;
 };
 
@@ -85,8 +85,8 @@ exports.createCategoryMap = function(categories) {
       categoryData[Stock_item] = Category; // initialising
     }
   });
-  console.log("Product category data");
-  console.log(categoryData);
+  // console.log("Product category data");
+  // console.log(categoryData);
   return categoryData;
 };
 
@@ -101,8 +101,8 @@ exports.createProductCategoriesMap = function(productData, categoryData) {
     }
     catProdMap[category] += Number(quantity);
   }
-  console.log("Grouped Category Map");
-  console.log(catProdMap);
+  // console.log("Grouped Category Map");
+  // console.log(catProdMap);
   return catProdMap;
 };
 
@@ -116,9 +116,9 @@ exports.getMostPopularCategory = function(catProdMap) {
       maxCat = cat;
     }
   }
-  console.log("=================================================================================");
-  console.log("The most popular category is " + maxCat + " (with a value of R" + maxValue + ")");
-  console.log("=================================================================================");
+  // console.log("=================================================================================");
+  // console.log("The most popular category is " + maxCat + " (with a value of R" + maxValue + ")");
+  // console.log("=================================================================================");
   return maxCat;
 }
 
@@ -132,8 +132,8 @@ exports.getLeastPopularCategory = function(catProdMap) {
       minCat = cat;
     }
   }
-  console.log("=================================================================================");
-  console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
-  console.log("=================================================================================");
+  // console.log("=================================================================================");
+  // console.log("The least popular category is " + minCat + " (with a value of R" + minValue + ")");
+  // console.log("=================================================================================");
   return minCat;
 }
