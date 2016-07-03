@@ -75,7 +75,7 @@ function createHtml(statsMap) {
   return result;
 }
 
-for (var i = 1; i < 5; i++) {
+for (var i = 1; i < 5; i++) {  // creates a static html page for each week
   switch (i) {
     case 1:
       var statsMap_week1 = getWeeklyValues(i);
