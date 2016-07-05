@@ -2,7 +2,6 @@
 // var allProducts = require('../weekly_sales');
 // var mostProfitable = require('../most_profitable');
 // var assert = require('assert');
-// var result3 = undefined
 //
 // describe("Accessing and writing functions for the week's csv file", function() {
 //
