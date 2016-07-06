@@ -1,0 +1,26 @@
+{
+  "name": "Nelisa",
+  "version": "0.0.1",
+  "description": "Nelisa Spaza Shop application",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamanthaHoy/Nelisa_Spaza_Shop"
+  },
+  "keywords": [
+    "Nelisa",
+    "Spaza"
+  ],
+  "author": "Samantha Hoy",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/SamanthaHoy/Nelisa_Spaza_Shop/issues"
+  }
+}
