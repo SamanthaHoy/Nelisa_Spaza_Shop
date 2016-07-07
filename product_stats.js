@@ -1,15 +1,10 @@
+// Product_stats is being called from my server.js file via routing and its being rendered in the browser
+
 var allProducts = require('./weekly_sales');
 var mostProfitable = require('./most_profitable');
 var assert = require('assert');
 var Handlebars = require('handlebars');
 var fs = require('fs');
-var statsMap_week1 = {};
-
-// var express = require('express');
-// var handlebars = require('express-handlebars');
-// var bodyParser = require('body-parser');
-// var session = require('express-session');
-// var flash = require('express-flash');
 
 // it("it should return the most popular product"
 function getWeeklyValues(week) {
@@ -58,6 +53,4 @@ function getWeeklyValues(week) {
 exports.getWeeklyStats = function (week) {
   var statsMap = getWeeklyValues(week);
   return statsMap;
-  // var htmlString = createHtml(statsMap); // when returning the htmlstring with compiled template+data combined , use this
-  // return htmlString; // returning the htmlString
 }

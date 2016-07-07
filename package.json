@@ -1,4 +1,4 @@
-{
+x{
   "name": "Nelisa",
   "version": "0.0.1",
   "description": "Nelisa Spaza Shop application",
@@ -22,5 +22,11 @@
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/SamanthaHoy/Nelisa_Spaza_Shop/issues"
+  },
+  "dependencies": {
+    "handlebars": "~4.0.5",
+    "express": "~4.14.0",
+    "express-handlebars": "~3.0.0",
+    "express-flash": "0.0.2"
   }
 }
