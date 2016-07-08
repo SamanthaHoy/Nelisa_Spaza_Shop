@@ -1,23 +1,19 @@
-x{
-  "name": "Nelisa",
-  "version": "0.0.1",
-  "description": "Nelisa Spaza Shop application",
+{
+  "name": "Nelisa'sSpazaShop",
+  "version": "0.0.0",
+  "description": "an application to show Nelisa her weekly stats regarding her products.Information is read in via .csv files for 4 weeks worth of data",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/SamanthaHoy/Nelisa_Spaza_Shop"
   },
-  "keywords": [
-    "Nelisa",
-    "Spaza"
-  ],
   "author": "Samantha Hoy",
   "license": "BSD-2-Clause",
   "bugs": {
@@ -25,8 +21,11 @@ x{
   },
   "dependencies": {
     "handlebars": "~4.0.5",
-    "express": "~4.14.0",
     "express-handlebars": "~3.0.0",
+    "express": "~4.14.0",
     "express-flash": "0.0.2"
-  }
+  },
+  "engines": {
+    "node": "v0.10.25"
+  },
 }
