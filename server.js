@@ -13,7 +13,7 @@ var dbOptions = {
       user: 'root',
       password: 'admin',
       port: 3306,
-      database: 'NELISA'
+      database: 'nelisa'
     };
 
 app.use(myConnection(mysql, dbOptions, 'single'));

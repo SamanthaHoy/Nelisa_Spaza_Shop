@@ -1,4 +1,4 @@
-use NELISA;
+use nelisa;
 
 CREATE TABLE IF NOT EXISTS products (
   prod_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -9,9 +9,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS categories (
   cat_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  cat_name VARCHAR(30) NOT NULL,
-  prod_id INT NOT NULL
---   FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+  cat_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sales (
@@ -37,7 +35,3 @@ CREATE TABLE IF NOT EXISTS purchases (
 ALTER TABLE products
     ADD FOREIGN KEY (cat_id)
     REFERENCES categories(cat_id);
-
-ALTER TABLE categories
-    ADD FOREIGN KEY (prod_id)
-    REFERENCES products(prod_id);
