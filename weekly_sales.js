@@ -105,23 +105,19 @@ exports.createProductCategoriesMap = function(productData, categoryData) {
   // console.log(catProdMap);
   return catProdMap;
 };
-
+// creates an array with products and category id's
 exports.createProductCategoryIdArray = function(prodCatMap, catDataMap) { //* categories.csv file and category map from the DB
-  var catProdArray1 = []; // new array
-  var catProdArray2 = []; // new array
+  var catProdArray = [];
   for (var product in prodCatMap) {
     var product_category_name = prodCatMap[product];
     var category_id = catDataMap[product_category_name];
-    catProdArray1.push(product,category_id);
+    catProdArray.push([product,category_id]);
     // console.log("product:" + prod + " prod category_name:" + product_category_name);
     // console.log("category_id : " + category_id);
   }
-  console.log("catProdArray1");
-  console.log(catProdArray1);
-  var catProdArray2 = catProdArray1;
-  console.log("catProdArray2");
-  console.log(catProdArray2);
-  return catProdArray2;
+  // console.log("catProdArray");
+  // console.log(catProdArray);
+  return catProdArray;
 };
 
 exports.getMostPopularCategory = function(catProdMap) {

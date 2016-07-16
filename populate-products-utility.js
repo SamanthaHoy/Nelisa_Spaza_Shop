@@ -1,5 +1,6 @@
-// Create a file called server.js
-// use express handlebars to pass data to your template and render it to your browser
+// Module used to populate the products table with values from the categories.csv file(unique set of products and
+// category data) and the values from the category database , in order to get the category_id , which would be inserted
+// saved in an array format and inserted into the products table
 
 var fs = require('fs');
 var mysql = require('mysql'); // node-mysql module
@@ -21,44 +22,38 @@ connection.connect(function(err) {
   }
 });
 
-var cat_sql = "SELECT * FROM categories";
+var sql = "SELECT * FROM categories";
 
-connection.query(cat_sql, function(err, categories) {
+connection.query(sql, function(err, categories) {
   if (err) throw err;
   //console.log('The solution is: ', rows);
   console.log(categories);
-  connection.end();
+  // connection.end();
 
-  // var catData = [];
   var catData = {};
   for (cat in categories) { // need to convert the categories map into pure data
-    // var catVar = [categories[cat].cat_name, categories[cat].cat_id]; // to put it into array format
-    // catData.push( // to put it into array format
-    //   catVar // to put it into array format
-    // )
     var cat_name = categories[cat].cat_name;
     var cat_id = categories[cat].cat_id;
-    if (catData[cat_name] === undefined){ // puts it into a map format
+    if (catData[cat_name] === undefined) { // puts it into a map format
       catData[cat_name] = cat_id
     }
   };
 
-  // console.log("catDatafromDB");
-  // console.log(catData);
-  // console.log("======================================");
-
   var prodCatData = weeklySales.getCategoriesFile(); // reads the categories.csv in
-  // console.log("prodCatData");
-  // console.log(prodCatData);
-  // console.log("======================================");
-
-  // var prodCatMap = weeklySales.createCategoryMap(catData);
   var prodCatMap = weeklySales.createCategoryMap(prodCatData); // converted into a map
-  // console.log("prodCatMap");
-  // console.log(prodCatMap);
-  // console.log("======================================");
+  var prodCatArray = weeklySales.createProductCategoryIdArray(prodCatMap, catData); // creates the products,category ID in array format
 
-  var prodCatMap = weeklySales.createProductCategoryIdArray(prodCatMap,catData);
-  var products_sql = "INSERT  FROM categories";
+  var sql = "INSERT INTO products (product_name, cat_id) VALUES ?";
+  var values = prodCatArray;
+
+  connection.query(sql, [values], function(err, products) {
+    if (err) {
+      console.log("There is an error with the product insertion sql");
+    };
+    throw err;
+    console.log('The solution is: ', rows);
+    console.log(products);
+    connection.end();
+  });
 
 });
