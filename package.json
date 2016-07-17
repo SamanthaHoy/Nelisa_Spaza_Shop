@@ -25,7 +25,8 @@
     "express": "~4.14.0",
     "express-flash": "0.0.2",
     "mysql": "~2.11.1",
-    "express-myconnection": "~1.0.4"
+    "express-myconnection": "~1.0.4",
+    "moment": "~2.14.1"
   },
   "engines": {
     "node": "v0.10.25"

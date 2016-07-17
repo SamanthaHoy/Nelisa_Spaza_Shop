@@ -36,6 +36,36 @@ exports.groupedByProductName = function(products) {
   return productData;
 };
 
+exports.getWeeklySalesProductIDinArray = function(products, productDBdata) {
+  var moment = require('moment');
+  var salesDataArray = [];
+  var firstProductLine = products[0].split(','); // gets the first line
+  var prodDate = firstProductLine[1]; // gets the date from the first line
+  var startDate = new Date(prodDate); // converts it to date format
+  var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
+  // console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
+  products.forEach(function(product) {
+    var delimitedData = product.split(',');
+    var day = delimitedData[0];
+    var date = delimitedData[1];
+    var datx = new Date(date);
+    datx.setFullYear("2015"); // used set to align the day with the date , else use getFullYear
+    var formattedDate = moment(datx).format('YYYY-MM-DD');
+    var product_name = delimitedData[2];
+    var quantity = delimitedData[3];
+    var unit_cost = delimitedData[4].replace("R", "");
+    var currentDate = new Date(date);
+    var product_id = productDBdata[product_name];
+    if (currentDate >= startDate && currentDate <= endDate) {
+      salesDataArray.push([day, formattedDate, product_id, quantity, unit_cost]);
+    }
+  });
+  // console.log("salesDataArray");
+  // console.log(salesDataArray);
+  return salesDataArray;
+};
+
+
 exports.mostPopularProductSold = function(productData) {
   var maxValue = 0;
   var mostPopularProduct = undefined;
@@ -111,7 +141,7 @@ exports.createProductCategoryIdArray = function(prodCatMap, catDataMap) { //* ca
   for (var product in prodCatMap) {
     var product_category_name = prodCatMap[product];
     var category_id = catDataMap[product_category_name];
-    catProdArray.push([product,category_id]);
+    catProdArray.push([product, category_id]);
     // console.log("product:" + prod + " prod category_name:" + product_category_name);
     // console.log("category_id : " + category_id);
   }
