@@ -4,7 +4,7 @@
 
 var fs = require('fs');
 var mysql = require('mysql'); // node-mysql module
-var weeklySales = require('./weekly_sales.js');
+var mostProfitable = require('./most_profitable.js');
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -41,23 +41,18 @@ connection.query(sql, function(err, products) {
 
   console.log(prodDataMap);
 
-  for (var week = 1; week < 5; week++) {
-    var salesData = weeklySales.weeklySales(week); // reads the week's.csv sales data
-    // var salesData = weeklySales.weeklySales(2); // reads the week's.csv sales data
-    console.log(salesData);
-    var values = weeklySales.getWeeklySalesProductIDinArray(salesData, prodDataMap);
-    console.log(values);
+  var values = mostProfitable.getWeeklyPurchaseProductIDinArray(prodDataMap); // gets the purchase data between the date range,returns the product unit cost
+  console.log(values);
+  var sql = "INSERT INTO purchases (shop, purchase_date, prod_id, purchases_quantity, purchases_unit_price ) VALUES ?";
 
-    var sql = "INSERT INTO sales (sales_day,sales_date,prod_id,sales_quantity,sales_unit_price) VALUES ?";
+  connection.query(sql, [values], function(err, purchases) {
+    if (err) {
+      console.log("There is an error with the purchases insertion sql");
+    };
+    throw err;
+    console.log('The solution is: ', rows);
+    console.log(purchases);
+    connection.end();
+  });
 
-    connection.query(sql, [values], function(err, sales) {
-      if (err) {
-        console.log("There is an error with the sales insertion sql");
-      };
-      throw err;
-      console.log('The solution is: ', rows);
-      console.log(sales);
-      connection.end();
-    });
-  }
 });

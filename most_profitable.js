@@ -12,7 +12,7 @@ exports.getPurchasesDateRange = function(week) {
   var prodDate = products[1]; // gets the date from the first line
   var startDate = new Date(+new Date(prodDate) - 1000 * 60 * 60 * 24 * 7); // converts it to date format, previous week's data
   var endDate = new Date(+new Date(startDate) + 1000 * 60 * 60 * 24 * 6);
-  var dateArray= [];
+  var dateArray = [];
   dateArray[0] = startDate;
   dateArray[1] = endDate;
   // console.log("prodDate :" + prodDate + " startDate: " + startDate + " endDate: " + endDate);
@@ -135,3 +135,27 @@ exports.getMostProfitable = function(profitMap) {
   // console.log("=================================================================================");
   return maxProduct;
 };
+
+// for loading the purchases data into the purchases table
+exports.getWeeklyPurchaseProductIDinArray = function(productDBdata) {
+  var moment = require('moment');
+  var purchasesDataArray = [];
+  var fs = require('fs');
+  var fileContent = fs.readFileSync('./files/purchases.csv', 'utf8');
+  var purchases = fileContent.split('\n').slice(1, -1); /* splits the content by the new line character , ignores 1st and last lines*/
+
+  purchases.forEach(function(purchase) {
+    var delimitedData = purchase.split(';');
+    var shop = delimitedData[0];
+    var date = delimitedData[1];
+    var datx = new Date(date);
+    datx.setFullYear("2015"); // used set to align the day with the date , else use getFullYear
+    var formattedDate = moment(datx).format('YYYY-MM-DD');
+    var product_name = delimitedData[2];
+    var quantity = delimitedData[3];
+    var purchase_unit_cost = delimitedData[4].replace("R", "");
+    var product_id = productDBdata[product_name];
+    purchasesDataArray.push([shop, formattedDate, product_id, quantity, purchase_unit_cost]);
+  });
+  return purchasesDataArray;
+}

@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS sales (
   sales_date DATE NOT NULL,
   prod_id INT NOT NULL,
   sales_quantity INT(6) NOT NULL,
-  sales_unit_price DECIMAL(6,2) NOT NULL,
-  FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+  sales_unit_price DECIMAL(6,2) NOT NULL
+--  FOREIGN KEY (prod_id) REFERENCES products(prod_id)
 );
 
 CREATE TABLE IF NOT EXISTS purchases (
@@ -28,10 +28,10 @@ CREATE TABLE IF NOT EXISTS purchases (
   purchase_date DATE NOT NULL,
   prod_id INT NOT NULL,
   purchases_quantity INT(6) NOT NULL,
-  purchases_unit_price DECIMAL(6,2) NOT NULL,
-  FOREIGN KEY (prod_id) REFERENCES products(prod_id)
+  purchases_unit_price DECIMAL(6,2) NOT NULL
+--  FOREIGN KEY (prod_id) REFERENCES products(prod_id)
 );
 
-ALTER TABLE products
-    ADD FOREIGN KEY (cat_id)
-    REFERENCES categories(cat_id);
+-- ALTER TABLE products
+--     ADD FOREIGN KEY (cat_id)
+--     REFERENCES categories(cat_id);
