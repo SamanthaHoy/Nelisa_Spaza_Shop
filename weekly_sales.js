@@ -52,10 +52,11 @@ exports.getWeeklySalesProductIDinArray = function(products, productDBdata) {
     datx.setFullYear("2015"); // used set to align the day with the date , else use getFullYear
     var formattedDate = moment(datx).format('YYYY-MM-DD');
     var product_name = delimitedData[2];
-    var quantity = delimitedData[3];
-    var unit_cost = delimitedData[4].replace("R", "");
+    var quantity = Number(delimitedData[3]);
+    var sales_unit_cost = delimitedData[4].replace("R", "").replace(",", ".");
+    var unit_cost = parseFloat(sales_unit_cost);
     var currentDate = new Date(date);
-    var product_id = productDBdata[product_name];
+    var product_id = Number(productDBdata[product_name]);
     if (currentDate >= startDate && currentDate <= endDate) {
       salesDataArray.push([day, formattedDate, product_id, quantity, unit_cost]);
     }

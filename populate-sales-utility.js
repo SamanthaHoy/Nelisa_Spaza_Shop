@@ -43,8 +43,7 @@ connection.query(sql, function(err, products) {
 
   for (var week = 1; week < 5; week++) {
     var salesData = weeklySales.weeklySales(week); // reads the week's.csv sales data
-    // var salesData = weeklySales.weeklySales(2); // reads the week's.csv sales data
-    console.log(salesData);
+    // console.log(salesData);
     var values = weeklySales.getWeeklySalesProductIDinArray(salesData, prodDataMap);
     console.log(values);
 
@@ -57,7 +56,8 @@ connection.query(sql, function(err, products) {
       throw err;
       console.log('The solution is: ', rows);
       console.log(sales);
-      connection.end();
+      // connection.end();
     });
   }
+  connection.end();
 });
