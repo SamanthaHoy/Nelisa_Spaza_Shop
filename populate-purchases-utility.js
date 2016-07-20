@@ -44,7 +44,7 @@ connection.query(sql, function(err, products) {
   var values = mostProfitable.getWeeklyPurchaseProductIDinArray(prodDataMap); // gets the purchase data between the date range,returns the product unit cost
   console.log(values);
   var sql = "INSERT INTO purchases (shop, purchase_date, prod_id, purchases_quantity, purchases_unit_price ) VALUES ?";
-
+  // var sql = "INSERT INTO purchases (shop, purchase_date, prod_id) VALUES ?";
   connection.query(sql, [values], function(err, purchases) {
     if (err) {
       console.log("There is an error with the purchases insertion sql");

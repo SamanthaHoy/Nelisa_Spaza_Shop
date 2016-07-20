@@ -152,10 +152,11 @@ exports.getWeeklyPurchaseProductIDinArray = function(productDBdata) {
     datx.setFullYear("2015"); // used set to align the day with the date , else use getFullYear
     var formattedDate = moment(datx).format('YYYY-MM-DD');
     var product_name = delimitedData[2];
-    var quantity = delimitedData[3];
-    var purchase_unit_cost = delimitedData[4].replace("R", "");
-    var product_id = productDBdata[product_name];
-    purchasesDataArray.push([shop, formattedDate, product_id, quantity, purchase_unit_cost]);
+    var quantity = Number(delimitedData[3]);
+    var purchase_unit_cost = delimitedData[4].replace("R", "").replace(",", ".");
+    var unit_cost = parseFloat(purchase_unit_cost);
+    var product_id = Number(productDBdata[product_name]);
+    purchasesDataArray.push([shop, formattedDate, product_id, quantity, unit_cost]);
   });
   return purchasesDataArray;
 }
