@@ -6,14 +6,9 @@ var app = express();
 var product_stats = require('./product_stats.js');
 var exphbs = require('express-handlebars');
 var mysql  = require('mysql');  // node-mysql module
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json(); // create application/json parser
+var bodyParse = require('body-parser');
+var jsonParser = bodyParser.json(); // create application/json parser 
 var urlencodedParser = bodyParser.urlencoded({extended: false}); // create application /x-www-form-urlencoded-parser
-var categories = require('./routes/categories');
-// var products = require('./routes/products');
-
-
-app.use(express.static(__dirname + '/public'));
 
 var myConnection = require('express-myconnection'); // express-myconnection module
 var dbOptions = {
@@ -29,23 +24,20 @@ app.use(myConnection(mysql, dbOptions, 'single'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-//setup the handlers
-app.get('/categories', categories.show);
-
-// app.get('/sales/week/:week_no', function(req, res) {
-//   var week_num = Number(req.params.week_no);
-//   if (week_num < 5) {
-//     var data = product_stats.getWeeklyStats(week_num);
-//     return res.render('week_template', data); // return = break
-//   } else {
-//     var error = {error_message:"This is not a valid week.Please re-enter a number between 1-4"};
-//     res.render('error_template', error);
-//   };
-// });
+app.get('/sales/week/:week_no', function(req, res) {
+  var week_num = Number(req.params.week_no);
+  if (week_num < 5) {
+    var data = product_stats.getWeeklyStats(week_num);
+    return res.render('week_template', data); // return = break
+  } else {
+    var error = {error_message:"This is not a valid week.Please re-enter a number between 1-4"};
+    res.render('error_template', error);
+  };
+});
 
 // start the server
 var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
-  console.log('Server app listening at http://%s:%s', host, port);
+  //console.log('Example app listening at http://%s:%s', host, port);
 });
