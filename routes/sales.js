@@ -5,12 +5,13 @@
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('SELECT * from products', [], function(err, results) {
+    connection.query('SELECT * from sales', [], function(err, results) {
       if (err) return next(err);
-      console.log('this came from products', results);
-      res.render('products', {
-        no_products: results.length === 0,
-        products: results,
+      var moment = require('moment');
+      console.log('this came from sales', results);
+      res.render('sales', {
+        no_sales: results.length === 0,
+        sales: results,
       });
     });
   });

@@ -10,8 +10,9 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json(); // create application/json parser
 var urlencodedParser = bodyParser.urlencoded({extended: false}); // create application /x-www-form-urlencoded-parser
 var categories = require('./routes/categories');
-// var products = require('./routes/products');
-
+var products = require('./routes/products');
+var sales = require('./routes/sales');
+var purchases = require('./routes/purchases');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -30,7 +31,28 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 //setup the handlers
-app.get('/categories', categories.show);
+app.get('/', categories.display);
+app.get('/categories', categories.display);
+app.get('/categories/add', categories.showAdd);
+app.get('/categories/edit/:id', categories.get);
+app.post('/categories/update/:id', categories.update);
+app.post('/categories/add', categories.add);
+//this should be a post but this is only an illustration of CRUD - not on good practices
+app.get('/categories/delete/:id', categories.delete);
+
+app.get('/', products.display);
+app.get('/products', products.display);
+app.get('/products/edit/:id', products.get);
+app.post('/products/update/:id', products.update);
+app.get('/products/add', products.showAdd);
+app.post('/products/add', products.add);
+
+//this should be a post but this is only an illustration of CRUD - not on good practices
+app.get('/products/delete/:id', products.delete);
+
+app.get('/sales' , sales.display);
+
+app.get('/purchases' , purchases.display);
 
 // app.get('/sales/week/:week_no', function(req, res) {
 //   var week_num = Number(req.params.week_no);

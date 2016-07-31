@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-11">
+    <h1>Sales</h1>
+    <a class="btn btn-info" href="/sales/add">Add new sale</a>
+    <table class="table table-striped">
+      <tr>
+        <th> Sales ID </th>
+        <th> Sales Day </th>
+        <th> Sales Date </th>
+        <th> Prod ID </td>
+        <th> Sales Quantity </td>
+        <th> Sales Unit Price </td>
+        <th> </th>
+        <th> </th>
+      </tr>
+    {{#sales}}
+      <tr>
+        <td> <h4> {{sales_id}} </h4> </td>
+        <td> <h4> {{sales_day}}</h4> </td>
+        <td> <h4> {{sales_date}} </h4> </td>
+        <td> <h4> {{prod_id}} </h4> </td>
+        <td> <h4> {{sales_quantity}} </h4> </td>
+        <td> <h4> {{sales_unit_price}} </h4> </td>
+        <td> <h4> <a href="/sales/edit/{{id}}">Edit</a> </h4></td>
+        <td> <h4> <a href="/sales/delete/{{id}}">Delete</a> </h4></td>
+      </tr>
+    {{/sales}}
+    </table>
+  </div>
+  <script>
+    Handlebars.registerHelper('dateformat', function(date) {
+      return moment(date, "ddd, D MMM YYYY HH:mm:ss Z").format("YYYY-MM-DD");
+    });
+  </script>
+</div>
