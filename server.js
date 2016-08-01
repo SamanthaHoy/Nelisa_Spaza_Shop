@@ -2,17 +2,19 @@
 // use express handlebars to pass data to your template and render it to your browser
 
 var express = require('express');
-var app = express();
 var product_stats = require('./product_stats.js');
 var exphbs = require('express-handlebars');
 var mysql  = require('mysql');  // node-mysql module
 var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json(); // create application/json parser
 var urlencodedParser = bodyParser.urlencoded({extended: false}); // create application /x-www-form-urlencoded-parser
 var categories = require('./routes/categories');
 var products = require('./routes/products');
 var sales = require('./routes/sales');
 var purchases = require('./routes/purchases');
+
+var app = express();
+var jsonParser = bodyParser.json(); // create application/json parser
+
 
 app.use(express.static(__dirname + '/public'));
 
@@ -25,7 +27,12 @@ var dbOptions = {
       database: 'nelisa'
     };
 
+//setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
