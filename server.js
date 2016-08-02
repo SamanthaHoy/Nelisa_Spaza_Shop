@@ -35,9 +35,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
+
 app.set('view engine', 'handlebars');
 
+app.get("/",function(req,res){
+  res.render("home");
+
+  app.get("/addProduct",function(req,res){
+    res.render("add_products");
+  })
+});
 //setup the handlers
 app.get('/', categories.display);
 app.get('/categories', categories.display);
@@ -48,7 +58,7 @@ app.post('/categories/add', categories.add);
 //this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/categories/delete/:id', categories.delete);
 
-app.get('/', products.display);
+// app.get('/', products.display);
 app.get('/products', products.display);
 app.get('/products/edit/:id', products.get);
 app.post('/products/update/:id', products.update);
@@ -63,6 +73,8 @@ app.get('/sales/add', sales.showAdd);
 app.post('/sales/add', sales.add);
 
 app.get('/purchases' , purchases.display);
+
+
 
 // app.get('/sales/week/:week_no', function(req, res) {
 //   var week_num = Number(req.params.week_no);

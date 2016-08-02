@@ -1,3 +1,4 @@
+
 <h1>Add product</h1>
 
 <form action="/products/add" method="POST">
@@ -6,11 +7,15 @@
 		<input type="text" name="product_name" value="{{product_name}}">
 	</div>
 
-	<div>
-		<label for="">Cat ID</label>
-		<input type="number" name="cat_id" value="{{cat_id}}">
+	<div class="">
+		<label for="">Category</label>
+		<select class="" name="category_id">
+			{{#categories}}
+				<option value="{{cat_id}}">{{cat_name}}</option>
+			{{/categories}}
+		</select>
 	</div>
 
 	<input type="submit">
-	
+
 </form>

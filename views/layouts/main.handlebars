@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<head>
-  <meta charset="utf-8">
-  <title> {{title}} </title>
-  <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-</head>
+  </head>
 
 <body>
-  <div class="container">
-    {{{body}}}
-  </div>
-  <!--main -->
+  <nav class="navbar navbar-default">
+    <div class="collapse navbar-collapse" id="mainNavBar">
+      <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/sales">Sales</a></li>
+          <li><a href="/products">Products</a></li>
+          <li><a href="/purchases">Purchases</a></li>
+          <li><a href="/users">Users</a></li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+  {{{body}}}
 </body>
 </html>
