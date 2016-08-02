@@ -11,6 +11,7 @@ var categories = require('./routes/categories');
 var products = require('./routes/products');
 var sales = require('./routes/sales');
 var purchases = require('./routes/purchases');
+var moment = require('moment');
 
 var app = express();
 var jsonParser = bodyParser.json(); // create application/json parser
@@ -58,6 +59,8 @@ app.post('/products/add', products.add);
 app.get('/products/delete/:id', products.delete);
 
 app.get('/sales' , sales.display);
+app.get('/sales/add', sales.showAdd);
+app.post('/sales/add', sales.add);
 
 app.get('/purchases' , purchases.display);
 

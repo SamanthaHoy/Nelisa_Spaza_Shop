@@ -1,7 +1,16 @@
 <h1>Add product</h1>
 
 <form action="/products/add" method="POST">
-	<label for="productName">Description</label>
-	<input type="text" name="product_name" value="{{product_name}}">
+	<div>
+		<label for="">Product Name</label>
+		<input type="text" name="product_name" value="{{product_name}}">
+	</div>
+
+	<div>
+		<label for="">Cat ID</label>
+		<input type="number" name="cat_id" value="{{cat_id}}">
+	</div>
+
 	<input type="submit">
+	
 </form>

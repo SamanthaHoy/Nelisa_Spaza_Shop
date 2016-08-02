@@ -1,0 +1,32 @@
+<h1>Add sale</h1>
+
+<form action="/sales/add" method="POST">
+	
+	<div>
+		<label for="">Sales Date</label>
+		<input type="date" name="sales_date" value="{{sales_date}}">
+	</div>
+
+	<div class="">
+		<label for="">Prod ID</label>
+		<input type="number" name="prod_id" value="{{prod_id}}">
+		<!-- <select class="" name="prod_id">
+			{{#products}}
+				<option value="{{prod_id}}">{{product_name}}</option>
+			{{/products}}
+		</select> -->
+	</div>
+
+	<div>
+		<label for="">Sales Quantity</label>
+		<input type="number" name="sales_quantity" value="{{sales_quantity}}">
+	</div>
+
+	<div>
+		<label for="">Sales Unit Price</label>
+		<input type="number" name="sales_unit_price" value="{{sales_unit_price}}">
+	</div>
+
+	<input type="submit">
+
+</form>

@@ -19,10 +19,10 @@ exports.display = function(req, res, next) {
 exports.showAdd = function(req, res) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('SELECT * from categories', [], function(err, categories) {
+    connection.query('SELECT * from products', [], function(err, products) {
       if (err) return next(err);
-      res.render('add', {
-        categories: categories,
+      res.render('add_products', {
+        products: products
       });
     });
   });
@@ -32,9 +32,8 @@ exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
     var data = {
-      category_id: Number(req.body.category_id),
-      description: req.body.description,
-      price: Number(req.body.price)
+      product_name: req.body.product_name,
+      cat_id: Number(req.body.cat_id)
     };
 
     connection.query('insert into products set ?', data, function(err, results) {
