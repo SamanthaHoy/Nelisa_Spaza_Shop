@@ -19,10 +19,10 @@ exports.display = function(req, res, next) {
 exports.showAdd = function(req, res) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('SELECT * from sales', [], function(err, sales) {
+    connection.query('SELECT * from products', [], function(err, results) {
       if (err) return next(err);
       res.render('add_sales', {
-        sales: sales,
+        products: results,
       });
     });
   });

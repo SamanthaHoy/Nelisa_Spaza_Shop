@@ -19,10 +19,10 @@ exports.display = function(req, res, next) {
 exports.showAdd = function(req, res) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('SELECT * from categories', [], function(err, categories) {
+    connection.query('SELECT * from products', [], function(err, results) {
       if (err) return next(err);
-      res.render('add', {
-        categories: categories,
+      res.render('add_purchases', {
+        products: results,
       });
     });
   });
@@ -32,14 +32,16 @@ exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
     var data = {
-      category_id: Number(req.body.category_id),
-      description: req.body.description,
-      price: Number(req.body.price)
+      shop : req.body.shop,
+      purchase_date: req.body.purchase_date,
+      prod_id: Number(req.body.prod_id),
+      purchases_quantity: req.body.purchases_quantity,
+      purchases_unit_price: Number(req.body.purchases_unit_price)
     };
 
-    connection.query('insert into products set ?', data, function(err, results) {
+    connection.query('insert into purchases set ?', data, function(err, results) {
       if (err) return next(err);
-      res.redirect('/products');
+      res.redirect('/purchases');
     });
   });
 };

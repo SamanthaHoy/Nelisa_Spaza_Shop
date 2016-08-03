@@ -1,0 +1,36 @@
+<h1>Add purchase</h1>
+
+<form action="/purchases/add" method="POST">
+
+	<div>
+		<label for="">Shop</label>
+		<input type="text" name="shop" value="{{shop}}">
+	</div>
+
+	<div>
+		<label for="">Purchase Date</label>
+		<input type="date" name="purchase_date" value="{{purchase_date}}">
+	</div>
+
+	<div class="">
+		<label for="">Prod ID</label>
+		<select class="" name="prod_id">
+			{{#products}}
+				<option value="{{prod_id}}">{{product_name}}</option>
+			{{/products}}
+		</select>
+	</div>
+
+	<div>
+		<label for="">Purchases Quantity</label>
+		<input type="number" name="purchases_quantity" value="{{purchases_quantity}}">
+	</div>
+
+	<div>
+		<label for="">Purchases Unit Price</label>
+		<input type="number" name="purchases_unit_price" value="{{purchases_unit_price}}">
+	</div>
+
+	<input type="submit">
+
+</form>

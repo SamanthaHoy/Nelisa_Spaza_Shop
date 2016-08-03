@@ -73,6 +73,8 @@ app.get('/sales/add', sales.showAdd);
 app.post('/sales/add', sales.add);
 
 app.get('/purchases' , purchases.display);
+app.get('/purchases/add', purchases.showAdd);
+app.post('/purchases/add', purchases.add);
 
 
 

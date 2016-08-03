@@ -1,7 +1,7 @@
 <h1>Add sale</h1>
 
 <form action="/sales/add" method="POST">
-	
+
 	<div>
 		<label for="">Sales Date</label>
 		<input type="date" name="sales_date" value="{{sales_date}}">
@@ -9,12 +9,11 @@
 
 	<div class="">
 		<label for="">Prod ID</label>
-		<input type="number" name="prod_id" value="{{prod_id}}">
-		<!-- <select class="" name="prod_id">
+		<select class="" name="prod_id">
 			{{#products}}
 				<option value="{{prod_id}}">{{product_name}}</option>
 			{{/products}}
-		</select> -->
+		</select>
 	</div>
 
 	<div>
