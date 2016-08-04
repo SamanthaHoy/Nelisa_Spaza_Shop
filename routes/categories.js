@@ -8,7 +8,7 @@ exports.display = function (req, res, next) {
 		if (err) return next(err);
 		connection.query('SELECT * from categories', [], function(err, results) {
         if (err) return next(err);
-				console.log('this came from categories', results);
+				// console.log('this came from categories', results);
 				res.render( 'categories', {
 						no_products : results.length === 0,
 						categories : results
@@ -26,7 +26,7 @@ exports.add = function (req, res, next) {
 		if (err) return next(err);
 		var input = req.body;
 		var data = {
-      		cat_name : input.cat_name 
+      		cat_name : input.cat_name
 		};
 		console.log("Data: " + data);
 	connection.query('insert into categories set ?', data, function(err, results) {
@@ -38,21 +38,25 @@ exports.add = function (req, res, next) {
 };
 
 exports.get = function(req, res, next){
-	var id = req.params.id;
+	var cat_id = req.params.cat_id;
+	// console.log("cat_id :" + cat_id);
 	req.getConnection(function(err, connection){
-		connection.query('SELECT * FROM categories WHERE id = ?', [id], function(err,rows){
+		connection.query('SELECT * FROM categories WHERE cat_id = ?', [cat_id], function(err,result){
 			if(err) return next(err);
-			res.render('edit_category',{page_title:"Edit Customers - Node.js", data : rows[0]});
+			// res.render('edit_category',{page_title:"Edit Customers - Node.js", data : rows[0]});
+			res.render('edit_category',{data : result[0]});
 		});
 	});
 };
 
 exports.update = function(req, res, next){
 
-  var data = req.body;
-  var id = req.params.id;
+  var data = {
+		cat_name : req.body.cat_name
+	};
+  var id = req.params.cat_id;
   req.getConnection(function(err, connection){
-			connection.query('UPDATE categories SET ? WHERE id = ?', [data, id], function(err, rows){
+			connection.query('UPDATE categories SET ? WHERE cat_id = ?', [data, id], function(err, rows){
     			if (err) next(err);
           		res.redirect('/categories');
     		});
@@ -61,9 +65,9 @@ exports.update = function(req, res, next){
 };
 
 exports.delete = function(req, res, next){
-	var id = req.params.id;
+	var id = req.params.cat_id;
 	req.getConnection(function(err, connection){
-		connection.query('DELETE FROM categories WHERE id = ?', [id], function(err,rows){
+		connection.query('DELETE FROM categories WHERE cat_id = ?', [id], function(err,rows){
 			if(err) return next(err);
 			res.redirect('/categories');
 		});

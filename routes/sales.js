@@ -7,7 +7,7 @@ exports.display = function(req, res, next) {
     if (err) return next(err);
     connection.query('SELECT * from sales', [], function(err, results) {
       if (err) return next(err);
-      console.log('this came from sales', results);
+      // console.log('this came from sales', results);
       res.render('sales', {
         no_sales: results.length === 0,
         sales: results,
@@ -33,7 +33,7 @@ exports.add = function(req, res, next) {
     if (err) return next(err);
     var moment = require('moment');
     var day = moment(req.body.sales_date).format('dddd');
-    console.log("day :" + day);
+    // console.log("day :" + day);
     var data = {
       sales_day: day,
       sales_date: moment(req.body.sales_date).format('YYYY-MM-DD'),
@@ -50,20 +50,21 @@ exports.add = function(req, res, next) {
 };
 
 exports.get = function(req, res, next) {
-  var id = req.params.id;
+  var id = req.params.sales_id;
   req.getConnection(function(err, connection) {
-    connection.query('SELECT * FROM categories', [id], function(err, categories) {
+    connection.query('SELECT * FROM products', [], function(err, products) {
       if (err) return next(err);
-      connection.query('SELECT * FROM products WHERE id = ?', [id], function(err, products) {
+
+      connection.query('SELECT * FROM sales WHERE sales_id = ?', [id], function(err, sales) {
         if (err) return next(err);
-        var product = products[0];
-        categories = categories.map(function(category) {
-          category.selected = category.id === product.category_id ? "selected" : "";
-          return category;
+        var product = products[0]; // first row returned
+        product = products.map(function(prod) {
+          prod.selected = prod.prod_id === sales.prod_id ? "selected" : "";
+          return prod;
         });
-        res.render('edit', {
-          categories: categories,
-          data: product
+        res.render('edit_sales', {
+          products: product,
+          data: sales
         });
       });
     });
@@ -71,28 +72,32 @@ exports.get = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
-
+  var moment = require('moment');
+  var day = moment(req.body.sales_date).format('dddd');
   var data = {
-    category_id: Number(req.body.category_id),
-    description: req.body.description,
-    price: Number(req.body.price)
+    sales_day: day,
+    sales_date: moment(req.body.sales_date).format('YYYY-MM-DD'),
+    prod_id: Number(req.body.prod_id),
+    sales_quantity: Number(req.body.sales_quantity),
+    sales_unit_price: parseFloat(req.body.sales_unit_price)
   };
-  var id = req.params.id;
+  console.log("Data:" + data);
+  var id = req.params.sales_id;
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('UPDATE products SET ? WHERE id = ?', [data, id], function(err, rows) {
+    connection.query('UPDATE sales SET ? WHERE sales_id = ?', [data, id], function(err, rows) {
       if (err) return next(err);
-      res.redirect('/products');
+      res.redirect('/sales');
     });
   });
 };
 
 exports.delete = function(req, res, next) {
-  var id = req.params.id;
+  var id = req.params.sales_id;
   req.getConnection(function(err, connection) {
-    connection.query('DELETE FROM products WHERE id = ?', [id], function(err, rows) {
+    connection.query('DELETE FROM sales WHERE sales_id = ?', [id], function(err, rows) {
       if (err) return next(err);
-      res.redirect('/products');
+      res.redirect('/sales');
     });
   });
 };

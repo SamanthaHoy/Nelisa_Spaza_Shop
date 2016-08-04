@@ -52,25 +52,27 @@ app.get("/",function(req,res){
 app.get('/', categories.display);
 app.get('/categories', categories.display);
 app.get('/categories/add', categories.showAdd);
-app.get('/categories/edit/:id', categories.get);
-app.post('/categories/update/:id', categories.update);
 app.post('/categories/add', categories.add);
+app.get('/categories/edit/:cat_id', categories.get);
+app.post('/categories/update/:cat_id', categories.update);
 //this should be a post but this is only an illustration of CRUD - not on good practices
-app.get('/categories/delete/:id', categories.delete);
+app.get('/categories/delete/:cat_id', categories.delete);
 
 // app.get('/', products.display);
 app.get('/products', products.display);
-app.get('/products/edit/:id', products.get);
-app.post('/products/update/:id', products.update);
 app.get('/products/add', products.showAdd);
 app.post('/products/add', products.add);
-
+app.get('/products/edit/:prod_id', products.get);
+app.post('/products/update/:prod_id', products.update);
 //this should be a post but this is only an illustration of CRUD - not on good practices
-app.get('/products/delete/:id', products.delete);
+app.get('/products/delete/:prod_id', products.delete);
 
 app.get('/sales' , sales.display);
 app.get('/sales/add', sales.showAdd);
 app.post('/sales/add', sales.add);
+app.get('/sales/edit/:sales_id', sales.get);
+app.post('/sales/update/:sales_id', sales.update);
+app.get('/sales/delete/:sales_id', sales.delete);
 
 app.get('/purchases' , purchases.display);
 app.get('/purchases/add', purchases.showAdd);
