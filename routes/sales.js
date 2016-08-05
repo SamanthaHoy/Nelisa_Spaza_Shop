@@ -1,6 +1,3 @@
-/***
- * A very basic CRUD example using MySQL
- */
 
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
@@ -33,7 +30,6 @@ exports.add = function(req, res, next) {
     if (err) return next(err);
     var moment = require('moment');
     var day = moment(req.body.sales_date).format('dddd');
-    // console.log("day :" + day);
     var data = {
       sales_day: day,
       sales_date: moment(req.body.sales_date).format('YYYY-MM-DD'),
@@ -54,17 +50,17 @@ exports.get = function(req, res, next) {
   req.getConnection(function(err, connection) {
     connection.query('SELECT * FROM products', [], function(err, products) {
       if (err) return next(err);
-
       connection.query('SELECT * FROM sales WHERE sales_id = ?', [id], function(err, sales) {
         if (err) return next(err);
-        var product = products[0]; // first row returned
-        product = products.map(function(prod) {
+        var sale = sales[0]; // first row returned
+        products = products.map(function(prod) {
           prod.selected = prod.prod_id === sales.prod_id ? "selected" : "";
           return prod;
         });
+        // console.log("Data from get: " + sale) ;
         res.render('edit_sales', {
-          products: product,
-          data: sales
+          products: products,
+          data: sale
         });
       });
     });
@@ -81,7 +77,7 @@ exports.update = function(req, res, next) {
     sales_quantity: Number(req.body.sales_quantity),
     sales_unit_price: parseFloat(req.body.sales_unit_price)
   };
-  console.log("Data:" + data);
+  // console.log("Data:" + data);
   var id = req.params.sales_id;
   req.getConnection(function(err, connection) {
     if (err) return next(err);

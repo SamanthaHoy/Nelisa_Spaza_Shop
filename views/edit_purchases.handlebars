@@ -1,0 +1,30 @@
+<h1>Edit purchase</h1>
+
+<form action="/purchases/update/{{data.purchases_id}}" method="POST">
+
+	<div class="">
+		<label for="">Purchase Date</label>
+		<input type="date" name="purchase_date" value="{{data.purchase_date}}">
+	</div>
+
+	<div class="">
+		<label for="">Prod ID </label>
+		<select class="" name="prod_id">
+			{{#products}}
+				<option value="{{prod_id}}">{{product_name}}</option>
+			{{/products}}
+		</select>
+	</div>
+
+	<div class="">
+		<label for="">Purchase Quantity</label>
+		<input type="number" name="purchases_quantity" value="{{data.purchases_quantity}}">
+	</div>
+
+	<div class="">
+		<label for="">Purchases Unit Price</label>
+		<input type="number" step="0.01" min="0" name="purchases_unit_price" value="{{data.purchases_unit_price}} ">
+	</div>
+
+	<input type="submit">
+</form>
