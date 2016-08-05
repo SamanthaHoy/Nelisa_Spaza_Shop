@@ -1,6 +1,4 @@
-/***
- * A very basic CRUD example using MySQL
- */
+
 
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
@@ -47,20 +45,21 @@ exports.add = function(req, res, next) {
 };
 
 exports.get = function(req, res, next) {
-  var id = req.params.id;
+  var id = req.params.purchases_id;
   req.getConnection(function(err, connection) {
-    connection.query('SELECT * FROM categories', [id], function(err, categories) {
+    connection.query('SELECT * FROM products', [], function(err, products) {
       if (err) return next(err);
-      connection.query('SELECT * FROM products WHERE id = ?', [id], function(err, products) {
+      connection.query('SELECT * FROM purchases WHERE purchases_id = ?', [id], function(err, purchases) {
         if (err) return next(err);
-        var product = products[0];
-        categories = categories.map(function(category) {
-          category.selected = category.id === product.category_id ? "selected" : "";
-          return category;
+        var purchase = purchases[0]; // first row returned
+        products = products.map(function(prod) {
+          prod.selected = prod.prod_id === purchases.prod_id ? "selected" : "";
+          return prod;
         });
-        res.render('edit', {
-          categories: categories,
-          data: product
+        // console.log("Data from get: " + sale) ;
+        res.render('edit_purchases', {
+          products: products,
+          data: purchase
         });
       });
     });
@@ -68,28 +67,31 @@ exports.get = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
-
+  var moment = require('moment');
   var data = {
-    category_id: Number(req.body.category_id),
-    description: req.body.description,
-    price: Number(req.body.price)
+    shop : req.body.shop,
+    purchase_date: moment(req.body.purchase_date).format('YYYY-MM-DD'),
+    prod_id: Number(req.body.prod_id),
+    purchases_quantity: Number(req.body.purchases_quantity),
+    purchases_unit_price: parseFloat(req.body.purchases_unit_price)
   };
-  var id = req.params.id;
+  // console.log("Data:" + data);
+  var id = req.params.purchases_id;
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    connection.query('UPDATE products SET ? WHERE id = ?', [data, id], function(err, rows) {
+    connection.query('UPDATE purchases SET ? WHERE purchases_id = ?', [data, id], function(err, rows) {
       if (err) return next(err);
-      res.redirect('/products');
+      res.redirect('/purchases');
     });
   });
 };
 
 exports.delete = function(req, res, next) {
-  var id = req.params.id;
+  var id = req.params.purchases_id;
   req.getConnection(function(err, connection) {
-    connection.query('DELETE FROM products WHERE id = ?', [id], function(err, rows) {
+    connection.query('DELETE FROM purchases WHERE purchases_id = ?', [id], function(err, rows) {
       if (err) return next(err);
-      res.redirect('/products');
+      res.redirect('/purchases');
     });
   });
 };

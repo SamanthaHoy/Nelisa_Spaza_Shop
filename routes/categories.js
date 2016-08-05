@@ -39,7 +39,6 @@ exports.add = function (req, res, next) {
 
 exports.get = function(req, res, next){
 	var cat_id = req.params.cat_id;
-	// console.log("cat_id :" + cat_id);
 	req.getConnection(function(err, connection){
 		connection.query('SELECT * FROM categories WHERE cat_id = ?', [cat_id], function(err,result){
 			if(err) return next(err);

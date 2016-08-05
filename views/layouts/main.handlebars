@@ -4,13 +4,28 @@
 <head>
   <!-- <link rel="stylesheet" href="/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
   <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    li.dropdown {
+      display: inline-block;
+    }
+  </style>
 </head>
 
 <body>
   <nav class="navbar navbar-default">
     <div class="collapse navbar-collapse" id="mainNavBar">
+      <nav class="navbar navbar-default navbar-fixed-top">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistics <span class="caret"></span> </a>
+          <ul class="dropdown-menu">
+            <li><a href="/statistics/1">Week1</a></li>
+            <li><a href="/statistics/2">Week2</a></li>
+            <li><a href="/statistics/3">Week3</a></li>
+            <li><a href="/statistics/4">Week4</a></li>
+          </ul>
+        </li>
         <li><a href="/categories">Categories</a></li>
         <li><a href="/products">Products</a></li>
         <li><a href="/sales">Sales</a></li>
@@ -18,10 +33,20 @@
         <li><a href="/users">Users</a></li>
       </ul>
     </div>
-  </div>
-</nav>
-  {{{body}}}
+    </div>
+  </nav>
 
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- <script src="js/bootstrap.min.js"></script> -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+  $(".dropdown-toggle").dropdown();
+  });
+    </script>
+  {{{body}}}
 </body>
 
 </html>
