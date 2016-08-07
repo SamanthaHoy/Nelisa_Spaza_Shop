@@ -26,12 +26,20 @@
     purchases_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     shop VARCHAR(20),
     purchase_date DATE NOT NULL,
-    prod_id INT ,
+    prod_id INT NOT NULL,
     purchases_quantity INT(6) NOT NULL,
     purchases_unit_price DECIMAL(6,2) NOT NULL,
     FOREIGN KEY (prod_id) REFERENCES products(prod_id)
   );
 
+  CREATE TABLE IF NOT EXISTS users (
+    user_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    role VARCHAR(10) NOT NULL
+  );
+  
 -- ALTER TABLE products
 --     ADD FOREIGN KEY (cat_id)
 --     REFERENCES categories(cat_id);

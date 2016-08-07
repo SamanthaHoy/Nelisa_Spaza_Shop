@@ -2,10 +2,12 @@
   <div class="col-md-11">
     <h1>Products</h1>
     <a class="btn btn-info" href="/products/add">Add new product</a>
-    <table class="table table-striped">
+    <div class="table-responsive">
+    <table class="table table-hover">
       <tr>
         <th> Product ID </th>
         <th> Product Name </th>
+        <th> Category ID</th>
         <th> </th>
         <th> </th>
       </tr>
@@ -13,10 +15,12 @@
       <tr>
         <td> <h4> {{prod_id}} </h4> </td>
         <td> <h4> {{product_name}}</h4> </td>
+        <td> <h4> {{cat_id}}</h4> </td>
         <td> <h4> <a href="/products/edit/{{prod_id}}">Edit</a> </h4></td>
         <td> <h4> <a href="/products/delete/{{prod_id}}">Delete</a> </h4></td>
       </tr>
     {{/products}}
     </table>
+  </div>
   </div>
 </div>

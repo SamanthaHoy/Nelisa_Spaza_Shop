@@ -1,13 +1,8 @@
-/***
- * A very basic CRUD example using MySQL
- */
-
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
     connection.query('SELECT * from products', [], function(err, results) {
       if (err) return next(err);
-      console.log('this came from products', results);
       res.render('products', {
         no_products: results.length === 0,
         products: results,

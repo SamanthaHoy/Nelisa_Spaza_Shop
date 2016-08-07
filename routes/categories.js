@@ -1,8 +1,3 @@
-
-/***
- * A very basic CRUD example using MySQL
- */
-
 exports.display = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) return next(err);
@@ -42,14 +37,12 @@ exports.get = function(req, res, next){
 	req.getConnection(function(err, connection){
 		connection.query('SELECT * FROM categories WHERE cat_id = ?', [cat_id], function(err,result){
 			if(err) return next(err);
-			// res.render('edit_category',{page_title:"Edit Customers - Node.js", data : rows[0]});
 			res.render('edit_category',{data : result[0]});
 		});
 	});
 };
 
 exports.update = function(req, res, next){
-
   var data = {
 		cat_name : req.body.cat_name
 	};

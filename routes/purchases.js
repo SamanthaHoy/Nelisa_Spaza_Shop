@@ -1,11 +1,8 @@
-
-
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
     connection.query('SELECT * from purchases', [], function(err, results) {
       if (err) return next(err);
-      console.log('this came from purchases', results);
       res.render('purchases', {
         no_purchases: results.length === 0,
         purchases: results,
@@ -30,7 +27,7 @@ exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
     var data = {
-      shop : req.body.shop,
+      shop: req.body.shop,
       purchase_date: req.body.purchase_date,
       prod_id: Number(req.body.prod_id),
       purchases_quantity: req.body.purchases_quantity,
@@ -56,7 +53,6 @@ exports.get = function(req, res, next) {
           prod.selected = prod.prod_id === purchases.prod_id ? "selected" : "";
           return prod;
         });
-        // console.log("Data from get: " + sale) ;
         res.render('edit_purchases', {
           products: products,
           data: purchase
@@ -69,13 +65,12 @@ exports.get = function(req, res, next) {
 exports.update = function(req, res, next) {
   var moment = require('moment');
   var data = {
-    shop : req.body.shop,
+    shop: req.body.shop,
     purchase_date: moment(req.body.purchase_date).format('YYYY-MM-DD'),
     prod_id: Number(req.body.prod_id),
     purchases_quantity: Number(req.body.purchases_quantity),
     purchases_unit_price: parseFloat(req.body.purchases_unit_price)
   };
-  // console.log("Data:" + data);
   var id = req.params.purchases_id;
   req.getConnection(function(err, connection) {
     if (err) return next(err);

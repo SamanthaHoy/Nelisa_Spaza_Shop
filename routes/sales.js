@@ -50,6 +50,7 @@ exports.get = function(req, res, next) {
   req.getConnection(function(err, connection) {
     connection.query('SELECT * FROM products', [], function(err, products) {
       if (err) return next(err);
+      // connection.query('SELECT * FROM sales WHERE sales_id = ?', [id], function(err, sales) {
       connection.query('SELECT * FROM sales WHERE sales_id = ?', [id], function(err, sales) {
         if (err) return next(err);
         var sale = sales[0]; // first row returned

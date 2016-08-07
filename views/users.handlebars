@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-11">
+    <h1>Users</h1>
+    <a class="btn btn-info" href="/users/add">Add new user</a>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <tr>
+        <th> User ID </th>
+        <th> Username </th>
+        <th> Password </th>
+        <th> Email </td>
+        <th> Role </td>
+        <th> </th>
+        <th> </th>
+      </tr>
+    {{#users}}
+      <tr>
+        <td> <h4> {{user_id}} </h4> </td>
+        <td> <h4> {{username}}</h4> </td>
+        <td> <h4> {{password}} </h4> </td>
+        <td> <h4> {{email}} </h4> </td>
+        <td> <h4> {{role}} </h4> </td>
+        <td> <h4> <a href="/users/edit/{{user_id}}">Edit</a> </h4></td>
+        <td> <h4> <a href="/users/delete/{{user_id}}">Delete</a> </h4></td>
+      </tr>
+    {{/users}}
+    </table>
+  </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@ var urlencodedParser = bodyParser.urlencoded({
 var categories = require('./routes/categories');
 var products = require('./routes/products');
 var sales = require('./routes/sales');
+var users = require('./routes/users');
 var purchases = require('./routes/purchases');
 var moment = require('moment');
 
@@ -97,7 +98,12 @@ app.get('/purchases/edit/:purchases_id', purchases.get);
 app.post('/purchases/update/:purchases_id', purchases.update);
 app.get('/purchases/delete/:purchases_id', purchases.delete);
 
-
+app.get('/users', users.display);
+app.get('/users/add', users.showAdd);
+app.post('/users/add', users.add);
+app.get('/users/edit/:user_id', users.get);
+app.post('/users/update/:user_id', users.update);
+app.get('/users/delete/:user_id', users.delete);
 // app.get('/sales/week/:week_no', function(req, res) {
 //   var week_num = Number(req.params.week_no);
 //   if (week_num < 5) {
