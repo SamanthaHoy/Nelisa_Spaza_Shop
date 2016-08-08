@@ -18,6 +18,12 @@ body {
 	width: 50%;
 	padding: 15px;
 }
+.pull-left {
+  float: left !important;
+}
+.pull-right {
+  float: right !important;
+}
 
 a:link {
 	color: #e59e54
@@ -53,7 +59,7 @@ input[type=text], input[type=number] {
 
 input[type=submit] {
 	padding: 1em;
-  	border: 0.3em solid #000;
+  border: 0.3em solid #000;
 	font-weight: bold;
 	font-size: 1em;
 };
@@ -81,4 +87,8 @@ input[type=submit] {
 
 .nav a:hover {
 	background-color: #4e5e56;
+}
+
+.navbar-dark {
+	background-color: grey;
 }

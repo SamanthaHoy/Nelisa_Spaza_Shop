@@ -1,7 +1,7 @@
 //
-var allProducts = require('../weekly_sales');
-var mostProfitable = require('../most_profitable');
-var product_stats = require('../product_stats');
+var allProducts = require('./functions/weekly_sales');
+var mostProfitable = require('./functions/most_profitable');
+var product_stats = require('./functions/product_stats');
 var assert = require('assert');
 
 describe("Accessing and writing functions for the week's csv file", function() {
@@ -359,7 +359,7 @@ it("it should return a data json object " , function(){
   leastPopularCategory: 'Toiletries',
   mostProfitableProduct: 'Imasi',
   mostProfitableCategory: 'Non-perishable food' };
-  
+
   console.log(result1);
   assert.deepEqual(result1,result2);
 });

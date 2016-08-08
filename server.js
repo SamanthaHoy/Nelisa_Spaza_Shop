@@ -2,13 +2,14 @@
 // use express handlebars to pass data to your template and render it to your browser
 
 var express = require('express');
-var product_stats = require('./product_stats.js');
+var flash = require('express-flash');
 var exphbs = require('express-handlebars');
 var mysql = require('mysql'); // node-mysql module
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({
   extended: false
-}); // create application /x-www-form-urlencoded-parser
+}); // create application / x-www-form-urlencoded-parser
+var product_stats = require('./functions/product_stats');
 var categories = require('./routes/categories');
 var products = require('./routes/products');
 var sales = require('./routes/sales');
@@ -104,16 +105,6 @@ app.post('/users/add', users.add);
 app.get('/users/edit/:user_id', users.get);
 app.post('/users/update/:user_id', users.update);
 app.get('/users/delete/:user_id', users.delete);
-// app.get('/sales/week/:week_no', function(req, res) {
-//   var week_num = Number(req.params.week_no);
-//   if (week_num < 5) {
-//     var data = product_stats.getWeeklyStats(week_num);
-//     return res.render('week_template', data); // return = break
-//   } else {
-//     var error = {error_message:"This is not a valid week.Please re-enter a number between 1-4"};
-//     res.render('error_template', error);
-//   };
-// });
 
 // start the server
 var server = app.listen(3000, function() {
