@@ -49,46 +49,50 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 //set up HttpSession middleware
-// app.use(session({
-//     secret: 'my fortune cookie',
-//     cookie: { maxAge: 60000 }
-// }));
+app.use(session({
+    secret: 'my fortune cookie',
+    cookie: { maxAge: 60000 }
+}));
 
-// To authenticate logging in
-app.use(function(req, res, next) {
-  console.log("in my middleware!");
-  // return res.redirect("/login"); // the user is not logged in redirect them to the login page
-  next(); //proceed to the next middleware component
-});
 // define the handlers for the authentication process
-// app.post('/', function (res,req){
-//
+// app.use(function(req, res, next) {
+//   console.log("in my middleware!");
+//   // return res.redirect("/login"); // the user is not logged in redirect them to the login page
+//   next(); //proceed to the next middleware component
 // });
 
-app.get('/', function(res,req){
-  res.redirect('/home');
+app.get('/', function(req,res){
+  res.redirect("/home");
 });
 
 // Route specific middleware allows you to add middleware components onto routes.
 var checkUser = function(req, res, next) {
+  if (req.session.username) { // if user exists , perform next task
+    return next();
+  }
   console.log("Checkuser...");
   res.redirect("/login"); // the user is not logged in redirect them to the login page
 };
 
-app.get('/home', checkUser, function(req, res) { // before logging in will check the user
+app.get("/home", checkUser, function(req, res) { // before logging in will check the user
   // var userData = userService.getUserData();
-  res.render('home');
+  var s = req.session.username;
+  res.render("home", {user: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() });
 });
 
 app.get("/login", function(req, res) {
   res.render("login", {});
 });
 
+app.post("/login", function(req, res) {
+  req.session.username = "samantha";
+  res.redirect("/home");
+});
 
-// To authenticate logging out
-// In a /logout route, you can remove the username from the HttpSession using code like this:
-//
-// delete req.session.username
+app.get("/logout" , function(req,res){ // To authenticate logging out
+  delete req.session.username;
+  res.redirect("/login");
+});
 
 //in a route
 // app.get("/users", function(req, res){

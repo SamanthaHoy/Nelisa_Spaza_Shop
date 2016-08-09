@@ -1,9 +1,12 @@
 <body class="body">
   <div class="row">
   <div class="col-md-11">
+
   <div class="text-center">
-    <h1 id="heading"> Nelisa's Spaza Shop </h1><br>
-    <img src="../images/fruitandveg3.jpg" alt="Shop" style="width:304px;height:228px;">
+    {{#if user}}
+      <h1 id="heading"> Welcome to Nelisa's Spaza Shop,{{user}}! </h1><br>
+      <img src="../images/fruitandveg3.jpg" alt="Shop" style="width:304px;height:228px;">
+    {{/if}}
   </div>
 
   <div class="text-center" id="tradingHours"> <br><br>
@@ -14,7 +17,6 @@
   </div>
     <!-- <div class="col-md-6 text-right">Website designed by Samantha Hoy </div> -->
 </div>
-
 </div>
 <div class="container">
   <div class="row">
