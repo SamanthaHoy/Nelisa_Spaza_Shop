@@ -1,14 +1,15 @@
 // Create a file called server.js
 // use express handlebars to pass data to your template and render it to your browser
+// using routes
 
 var express = require('express');
 var flash = require('express-flash');
 var exphbs = require('express-handlebars');
+var session = require('express-session'); // used for HTTP authentication and authorisation
 var mysql = require('mysql'); // node-mysql module
 var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({
-  extended: false
-}); // create application / x-www-form-urlencoded-parser
+
+// create application / x-www-form-urlencoded-parser
 var product_stats = require('./functions/product_stats');
 var categories = require('./routes/categories');
 var products = require('./routes/products');
@@ -17,9 +18,11 @@ var users = require('./routes/users');
 var purchases = require('./routes/purchases');
 var moment = require('moment');
 
-var app = express();
+var urlencodedParser = bodyParser.urlencoded({
+  extended: false
+});
 var jsonParser = bodyParser.json(); // create application/json parser
-
+var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
@@ -34,6 +37,10 @@ var dbOptions = {
 
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
+app.set('view engine', 'handlebars');
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
@@ -41,20 +48,66 @@ app.use(bodyParser.urlencoded({
   // parse application/json
 app.use(bodyParser.json())
 
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main'
-}));
+//set up HttpSession middleware
+// app.use(session({
+//     secret: 'my fortune cookie',
+//     cookie: { maxAge: 60000 }
+// }));
 
-app.set('view engine', 'handlebars');
-
-app.get("/", function(req, res) {
-  res.render("home");
-
-  app.get("/addProduct", function(req, res) {
-    res.render("add_products");
-  })
+// To authenticate logging in
+app.use(function(req, res, next) {
+  console.log("in my middleware!");
+  // return res.redirect("/login"); // the user is not logged in redirect them to the login page
+  next(); //proceed to the next middleware component
 });
-//setup the handlers
+// define the handlers for the authentication process
+// app.post('/', function (res,req){
+//
+// });
+
+app.get('/', function(res,req){
+  res.redirect('/home');
+});
+
+// Route specific middleware allows you to add middleware components onto routes.
+var checkUser = function(req, res, next) {
+  console.log("Checkuser...");
+  res.redirect("/login"); // the user is not logged in redirect them to the login page
+};
+
+app.get('/home', checkUser, function(req, res) { // before logging in will check the user
+  // var userData = userService.getUserData();
+  res.render('home');
+});
+
+app.get("/login", function(req, res) {
+  res.render("login", {});
+});
+
+
+// To authenticate logging out
+// In a /logout route, you can remove the username from the HttpSession using code like this:
+//
+// delete req.session.username
+
+//in a route
+// app.get("/users", function(req, res){
+//     // req.session will be defined now
+//     if (!req.session.user){
+//         //set a session value from a form variable
+//         req.session.user = req.body.username;
+//     }
+// });
+
+//setup the handlers ********************* taken out temporarily
+// app.get("/", function(req, res) {
+//   res.render("home");
+//
+//   app.get("/addProduct", function(req, res) {
+//     res.render("add_products");
+//   })
+// });
+
 app.get('/statistics/:week_no', function(req, res) {
   var week_num = Number(req.params.week_no);
   if (week_num < 5) {

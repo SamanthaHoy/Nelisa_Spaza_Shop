@@ -27,7 +27,8 @@
     "mysql": "~2.11.1",
     "express-myconnection": "~1.0.4",
     "moment": "~2.14.1",
-    "body-parser": "~1.15.2"
+    "body-parser": "~1.15.2",
+    "express-session": "~1.14.0"
   },
   "engines": {
     "node": "v0.10.25"
