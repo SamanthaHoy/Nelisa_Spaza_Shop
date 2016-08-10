@@ -49,13 +49,16 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 var rolesMap = { // admin rights
-  "samantha" : "admin",
-  "joe" : "view"
+  "Samantha": "admin",
+  "Paul": "user",
+  "Joe": "admin"
 };
 //set up HttpSession middleware
 app.use(session({
-    secret: 'my fortune cookie',
-    cookie: { maxAge: 60000 }
+  secret: 'my fortune cookie',
+  cookie: {
+    maxAge: 60000
+  }
 }));
 
 // define the handlers for the authentication process
@@ -65,7 +68,7 @@ app.use(session({
 //   next(); //proceed to the next middleware component
 // });
 
-app.get('/', function(req,res){
+app.get('/', function(req, res) {
   res.redirect("/home");
 });
 
@@ -81,8 +84,8 @@ var checkUser = function(req, res, next) {
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
   var s = req.session.user.username;
   res.render("home", {
-       username: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(), // first capital letter and rest lowercase
-       is_admin : req.session.user.is_admin
+    username: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(), // first capital letter and rest lowercase
+    is_admin: req.session.user.is_admin
   })
 });
 
@@ -91,26 +94,37 @@ app.get("/login", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
-  req.session.user = {
-    username : req.body.username,
-    is_admin : rolesMap[req.body.username] === "admin"
+
+  if (rolesMap[req.body.username] === "admin") { // if admin then sets the is_admin to true , else false
+    req.session.user = {
+      username: req.body.username,
+      is_admin: true
+    };
+  } else { // disables the rights to admin
+    req.session.user = {
+      username: req.body.username,
+      is_admin: false
+    };
   };
-  res.redirect("/home");
+
+  var allowedToLogin = false; // variable reset for allowing a user to go to login page
+  for (name in rolesMap) { // loops through the data object containing the names , roles and passwords
+    if (req.session.user.username.trim() === name) { // if the form username matches with the database username , gets rid of the whitespaces
+      allowedToLogin = true;
+      break; // as soon as a match is found ,escapes for loop
+    }
+  }
+  if (allowedToLogin) {    // if the user is found on the database (authenticated) , allow him or her to login
+    res.redirect("/home"); // go home
+  } else {
+    res.redirect("/login"); // else if the user isn't authenticated , redirect back to the login page
+  }
 });
 
-app.get("/logout" , function(req,res){ // To authenticate logging out
+app.get("/logout", function(req, res) { // To authenticate logging out
   delete req.session.user;
   res.redirect("/login");
 });
-
-//in a route
-// app.get("/users", function(req, res){
-//     // req.session will be defined now
-//     if (!req.session.user){
-//         //set a session value from a form variable
-//         req.session.user = req.body.username;
-//     }
-// });
 
 //setup the handlers ********************* taken out temporarily
 // app.get("/", function(req, res) {

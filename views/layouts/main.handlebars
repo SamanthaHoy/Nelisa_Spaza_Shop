@@ -33,7 +33,9 @@
         <li><a href="/products">Products</a></li>
         <li><a href="/sales">Sales</a></li>
         <li><a href="/purchases">Purchases</a></li>
-        <li><a href="/users">Users</a></li>
+        {{#if is_admin}}
+          <li><a href="/users">Users</a></li>
+        {{/if}}
         <li><a href="/logout">Logout</a></li>
       </ul>
     </div>
