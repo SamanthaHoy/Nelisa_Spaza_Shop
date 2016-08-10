@@ -48,6 +48,10 @@ app.use(bodyParser.urlencoded({
   // parse application/json
 app.use(bodyParser.json())
 
+var rolesMap = { // admin rights
+  "samantha" : "admin",
+  "joe" : "view"
+};
 //set up HttpSession middleware
 app.use(session({
     secret: 'my fortune cookie',
@@ -67,7 +71,7 @@ app.get('/', function(req,res){
 
 // Route specific middleware allows you to add middleware components onto routes.
 var checkUser = function(req, res, next) {
-  if (req.session.username) { // if user exists , perform next task
+  if (req.session.user) { // if user exists , perform next task
     return next();
   }
   console.log("Checkuser...");
@@ -75,9 +79,11 @@ var checkUser = function(req, res, next) {
 };
 
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
-  // var userData = userService.getUserData();
-  var s = req.session.username;
-  res.render("home", {user: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() });
+  var s = req.session.user.username;
+  res.render("home", {
+       username: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(), // first capital letter and rest lowercase
+       is_admin : req.session.user.is_admin
+  })
 });
 
 app.get("/login", function(req, res) {
@@ -85,12 +91,15 @@ app.get("/login", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
-  req.session.username = "samantha";
+  req.session.user = {
+    username : req.body.username,
+    is_admin : rolesMap[req.body.username] === "admin"
+  };
   res.redirect("/home");
 });
 
 app.get("/logout" , function(req,res){ // To authenticate logging out
-  delete req.session.username;
+  delete req.session.user;
   res.redirect("/login");
 });
 
