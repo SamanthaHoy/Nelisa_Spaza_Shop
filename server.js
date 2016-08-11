@@ -35,6 +35,13 @@ var dbOptions = {
   database: 'nelisa'
 };
 
+// var connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'admin',
+//   // port: 3306,
+//   database: 'nelisa'
+// });
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
 app.set('view engine', 'handlebars');
@@ -48,11 +55,6 @@ app.use(bodyParser.urlencoded({
   // parse application/json
 app.use(bodyParser.json())
 
-var rolesMap = { // admin rights
-  "Samantha": "admin",
-  "Paul": "user",
-  "Joe": "admin"
-};
 //set up HttpSession middleware
 app.use(session({
   secret: 'my fortune cookie',
@@ -74,6 +76,7 @@ app.get('/', function(req, res) {
 
 // Route specific middleware allows you to add middleware components onto routes.
 var checkUser = function(req, res, next) {
+
   if (req.session.user) { // if user exists , perform next task
     return next();
   }
@@ -93,32 +96,49 @@ app.get("/login", function(req, res) {
   res.render("login", {});
 });
 
-app.post("/login", function(req, res) {
+app.post("/login", function(req, res, next) {
+  // connecting to the database to find the username
+  var parm = req.body.username;
+  var sql = "SELECT * FROM users WHERE username = ? ";
+  //
+  req.getConnection(function(err, connection) {
 
-  if (rolesMap[req.body.username] === "admin") { // if admin then sets the is_admin to true , else false
-    req.session.user = {
-      username: req.body.username,
-      is_admin: true
-    };
-  } else { // disables the rights to admin
-    req.session.user = {
-      username: req.body.username,
-      is_admin: false
-    };
-  };
+    connection.query(sql, [parm], function(err, dbUsers) {
+      if (err) return next(err);
+      console.log(dbUsers);
 
-  var allowedToLogin = false; // variable reset for allowing a user to go to login page
-  for (name in rolesMap) { // loops through the data object containing the names , roles and passwords
-    if (req.session.user.username.trim() === name) { // if the form username matches with the database username , gets rid of the whitespaces
-      allowedToLogin = true;
-      break; // as soon as a match is found ,escapes for loop
-    }
-  }
-  if (allowedToLogin) {    // if the user is found on the database (authenticated) , allow him or her to login
-    res.redirect("/home"); // go home
-  } else {
-    res.redirect("/login"); // else if the user isn't authenticated , redirect back to the login page
-  }
+      var dbUsers = dbUsers[0];
+
+      if (dbUsers === undefined) {
+        return res.redirect("/login");
+      };
+
+      if (dbUsers.is_admin === "admin") { // sets the user roles , checking for admin
+        req.session.user = {
+          username: req.body.username,
+          is_admin: true
+        };
+        console.log("1)dbUsers.is_admin :" + dbUsers);
+      } else { // disables the rights to admin
+        req.session.user = {
+          username: req.body.username,
+          is_admin: false
+        };
+        console.log("2)dbUsers.is_admin :" + dbUsers);
+      };
+      var allowedToLogin = false; // variable reset for allowing a user to go to login page
+      if (req.session.user.username.trim() === req.body.username) { // if the form username matches with the database username , gets rid of the whitespaces
+        allowedToLogin = true;
+      };
+
+      if (allowedToLogin) { // if the user is found on the database , allow him or her to login
+        res.redirect("/home"); // go home
+      } else {
+        res.redirect("/login"); // else redirect back to the login page
+      };
+    });
+  });
+
 });
 
 app.get("/logout", function(req, res) { // To authenticate logging out

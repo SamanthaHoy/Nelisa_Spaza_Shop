@@ -34,12 +34,12 @@
 
   CREATE TABLE IF NOT EXISTS users (
     user_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    username VARCHAR(20) NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    username VARCHAR(40) NOT NULL,
+    password VARCHAR(120) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    role VARCHAR(10) NOT NULL
+    is_admin VARCHAR(5) NOT NULL
   );
-  
+
 -- ALTER TABLE products
 --     ADD FOREIGN KEY (cat_id)
 --     REFERENCES categories(cat_id);
