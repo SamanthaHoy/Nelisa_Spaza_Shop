@@ -85,9 +85,8 @@ var checkUser = function(req, res, next) {
 };
 
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
-  var s = req.session.user.username;
   res.render("home", {
-    username: s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(), // first capital letter and rest lowercase
+    username: req.session.user.username, 
     is_admin: req.session.user.is_admin
   })
 });
