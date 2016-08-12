@@ -25,6 +25,7 @@ var jsonParser = bodyParser.json(); // create application/json parser
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
+app.use(flash()); // for flash messages
 
 var myConnection = require('express-myconnection'); // express-myconnection module
 var dbOptions = {
@@ -35,13 +36,6 @@ var dbOptions = {
   database: 'nelisa'
 };
 
-// var connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'admin',
-//   // port: 3306,
-//   database: 'nelisa'
-// });
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
 app.set('view engine', 'handlebars');
@@ -86,7 +80,7 @@ var checkUser = function(req, res, next) {
 
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
   res.render("home", {
-    username: req.session.user.username, 
+    username: req.session.user.username,
     is_admin: req.session.user.is_admin
   })
 });
@@ -103,12 +97,20 @@ app.post("/login", function(req, res, next) {
   req.getConnection(function(err, connection) {
 
     connection.query(sql, [parm], function(err, dbUsers) {
-      if (err) return next(err);
+      if (err) return next(err); // if there is an error
       console.log(dbUsers);
 
       var dbUsers = dbUsers[0];
 
-      if (dbUsers === undefined) {
+      if (dbUsers === undefined) {                  // if no user found return to login
+        return res.redirect("/login");
+      };
+      if (dbUsers.password === req.body.password) { // checks to see if the passwords match
+        console.log("passwords match");
+      } else {
+        console.log("passwords do not match")
+        // req.flash('info', "You're password is invalid");
+        req.flash('msg', "You're password is invalid");
         return res.redirect("/login");
       };
 
@@ -118,22 +120,22 @@ app.post("/login", function(req, res, next) {
           is_admin: true
         };
         console.log("1)dbUsers.is_admin :" + dbUsers);
-      } else { // disables the rights to admin
+      } else {                            // disables the rights to admin
         req.session.user = {
           username: req.body.username,
           is_admin: false
         };
         console.log("2)dbUsers.is_admin :" + dbUsers);
       };
-      var allowedToLogin = false; // variable reset for allowing a user to go to login page
+      var allowedToLogin = false;         // variable reset for allowing a user to go to login page
       if (req.session.user.username.trim() === req.body.username) { // if the form username matches with the database username , gets rid of the whitespaces
         allowedToLogin = true;
       };
 
-      if (allowedToLogin) { // if the user is found on the database , allow him or her to login
-        res.redirect("/home"); // go home
+      if (allowedToLogin) {             // if the user is found on the database , allow him or her to login
+        res.redirect("/home");          // go home
       } else {
-        res.redirect("/login"); // else redirect back to the login page
+        res.redirect("/login");         // else redirect back to the login page
       };
     });
   });
