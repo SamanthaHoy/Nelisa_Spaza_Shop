@@ -17,6 +17,7 @@ var sales = require('./routes/sales');
 var users = require('./routes/users');
 var purchases = require('./routes/purchases');
 var moment = require('moment');
+var bcrypt = require('bcrypt'); // to encode passwords
 
 var urlencodedParser = bodyParser.urlencoded({
   extended: false
@@ -110,7 +111,7 @@ app.post("/login", function(req, res, next) {
       } else {
         console.log("passwords do not match")
         // req.flash('info', "You're password is invalid");
-        req.flash('msg', "You're password is invalid");
+        // req.flash('msg', "You're password is invalid");
         return res.redirect("/login");
       };
 

@@ -1,5 +1,6 @@
-<h1>Please login to Nelisa's Spaza Shop!</h1>
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<div class="container">
+
+<!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
 
 {{#if msg}}
 <div class="message">
@@ -8,6 +9,7 @@
 {{/if}}
 
 <form class="form-horizontal" action="/login" method="POST">
+  <h1>Please login to Nelisa's Spaza Shop!</h1>
   <div class="form-group">
 		 <label for="userName"class="col-sm-2 control-label">Username</label>
 		 <div class="col-sm-10">
@@ -26,3 +28,4 @@
     </div>
 	</div>
 </form>
+</div>

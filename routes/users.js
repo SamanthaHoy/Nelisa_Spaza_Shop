@@ -18,13 +18,20 @@ exports.showAdd = function(req, res) {
 exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
+    var bcrypt = require('bcrypt');
+
+    const myFormPassword = req.body.password;
+    console.log("myFormPassword :" + myFormPassword);
+    var hashedPw = bcrypt.hashSync(myFormPassword, 10);
+    console.log("hashedPw :" + hashedPw);
+
     var data = {
       username: req.body.username,
-      password: req.body.password,
+      password: hashedPw,
       email: req.body.email,
-      role: req.body.role
+      is_admin: req.body.is_admin
     };
-    connection.query('insert into users set ?', data, function(err, results) {
+      connection.query('insert into users set ?', data, function(err, results) {
       if (err) return next(err);
       res.redirect('/users');
     });
