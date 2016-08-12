@@ -22,19 +22,31 @@ exports.add = function(req, res, next) {
 
     const myFormPassword = req.body.password;
     console.log("myFormPassword :" + myFormPassword);
-    var hashedPw = bcrypt.hashSync(myFormPassword, 10);
-    console.log("hashedPw :" + hashedPw);
-
-    var data = {
-      username: req.body.username,
-      password: hashedPw,
-      email: req.body.email,
-      is_admin: req.body.is_admin
-    };
+    // var hashedPw = bcrypt.hashSync(myFormPassword, 10); // sync way of doing it
+    // console.log("hashedPw :" + hashedPw);
+    bcrypt.hash(myFormPassword, 10, function(err, hashedPw) {
+      // Store hash in your password DB.
+      var data = {
+        username: req.body.username,
+        password: hashedPw,
+        email: req.body.email,
+        is_admin: req.body.is_admin
+      };
       connection.query('insert into users set ?', data, function(err, results) {
-      if (err) return next(err);
-      res.redirect('/users');
+        if (err) return next(err);
+        res.redirect('/users');
+      });
     });
+    // var data = {
+    //   username: req.body.username,
+    //   password: hashedPw,
+    //   email: req.body.email,
+    //   is_admin: req.body.is_admin
+    // };
+    //   connection.query('insert into users set ?', data, function(err, results) {
+    //   if (err) return next(err);
+    //   res.redirect('/users');
+    // });
 
   });
 };
