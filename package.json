@@ -29,7 +29,7 @@
     "moment": "~2.14.1",
     "body-parser": "~1.15.2",
     "express-session": "~1.14.0",
-    "bcrypt": "~0.8.7"
+    "bcryptjs": "~2.3.0"
   },
   "engines": {
     "node": "v0.10.25"

@@ -17,7 +17,7 @@ var sales = require('./routes/sales');
 var users = require('./routes/users');
 var purchases = require('./routes/purchases');
 var moment = require('moment');
-var bcrypt = require('bcrypt'); // to encode passwords
+var bcrypt = require('bcryptjs'); // to encode passwords
 
 var urlencodedParser = bodyParser.urlencoded({
   extended: false
@@ -51,8 +51,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 //set up HttpSession middleware
-app.use(session({
-  secret: 'my fortune cookie',
+app.use(session(
+  {secret: 'my fortune cookie',
   cookie: {
     maxAge: 60000
   }
@@ -103,17 +103,22 @@ app.post("/login", function(req, res, next) {
 
       var dbUsers = dbUsers[0];
 
-      if (dbUsers === undefined) {                  // if no user found return to login
+      if (dbUsers === undefined) { // if no user found return to login
+        req.flash("warning", 'Invalid username or password');
         return res.redirect("/login");
       };
-      if (dbUsers.password === req.body.password) { // checks to see if the passwords match
-        console.log("passwords match");
-      } else {
-        console.log("passwords do not match")
-        // req.flash('info', "You're password is invalid");
-        // req.flash('msg', "You're password is invalid");
+      if (dbUsers.password !== req.body.password) { // checks to see if the passwords match
+        req.flash('warning', "Your password is invalid");
         return res.redirect("/login");
       };
+
+      // Load hash from your password DB.
+      // bcrypt.compare(req.body.password, dbUsers.password, function(err, match) {
+      //   if (match === false) {
+      //     console.log("the passwords don't match ");
+      //     return res.redirect("/login");
+      //   }
+      // });
 
       if (dbUsers.is_admin === "admin") { // sets the user roles , checking for admin
         req.session.user = {
@@ -121,22 +126,22 @@ app.post("/login", function(req, res, next) {
           is_admin: true
         };
         console.log("1)dbUsers.is_admin :" + dbUsers);
-      } else {                            // disables the rights to admin
+      } else { // disables the rights to admin
         req.session.user = {
           username: req.body.username,
           is_admin: false
         };
         console.log("2)dbUsers.is_admin :" + dbUsers);
       };
-      var allowedToLogin = false;         // variable reset for allowing a user to go to login page
+      var allowedToLogin = false; // variable reset for allowing a user to go to login page
       if (req.session.user.username.trim() === req.body.username) { // if the form username matches with the database username , gets rid of the whitespaces
         allowedToLogin = true;
       };
 
-      if (allowedToLogin) {             // if the user is found on the database , allow him or her to login
-        res.redirect("/home");          // go home
+      if (allowedToLogin) { // if the user is found on the database , allow him or her to login
+        res.redirect("/home"); // go home
       } else {
-        res.redirect("/login");         // else redirect back to the login page
+        res.redirect("/login"); // else redirect back to the login page
       };
     });
   });

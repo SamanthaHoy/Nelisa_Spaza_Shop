@@ -18,17 +18,15 @@ exports.showAdd = function(req, res) {
 exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    var bcrypt = require('bcrypt');
+    var bcrypt = require('bcryptjs');
 
-    const myFormPassword = req.body.password;
-    console.log("myFormPassword :" + myFormPassword);
-    // var hashedPw = bcrypt.hashSync(myFormPassword, 10); // sync way of doing it
-    // console.log("hashedPw :" + hashedPw);
-    bcrypt.hash(myFormPassword, 10, function(err, hashedPw) {
-      // Store hash in your password DB.
+    // const myFormPassword = req.body.password;
+    // console.log("myFormPassword :" + myFormPassword);
+    // bcrypt.hash(myFormPassword, 10, function(err, hashedPw) {
+
       var data = {
         username: req.body.username,
-        password: hashedPw,
+        password: req.body.password , // hashedPw,
         email: req.body.email,
         is_admin: req.body.is_admin
       };
@@ -36,18 +34,7 @@ exports.add = function(req, res, next) {
         if (err) return next(err);
         res.redirect('/users');
       });
-    });
-    // var data = {
-    //   username: req.body.username,
-    //   password: hashedPw,
-    //   email: req.body.email,
-    //   is_admin: req.body.is_admin
-    // };
-    //   connection.query('insert into users set ?', data, function(err, results) {
-    //   if (err) return next(err);
-    //   res.redirect('/users');
-    // });
-
+    // }); // bcrypt
   });
 };
 
@@ -56,7 +43,7 @@ exports.get = function(req, res, next) {
   req.getConnection(function(err, connection) {
     connection.query('SELECT * FROM users WHERE user_id = ?', [id], function(err, result) {
       if (err) return next(err);
-      res.render('edit_users', {
+      res.render('edit_user', {
         data: result[0]
       });
     });
