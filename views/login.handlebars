@@ -9,35 +9,37 @@
   <form class="form-horizontal" action="/login" method="POST">
     <h1>Please login to Nelisa's Spaza Shop!</h1>
     <div class="form-group">
-      <label for="userName" class="col-sm-2 control-label">Username</label>
-      <div class="col-sm-10">
+      <label for="userName" class="col-sm-1 control-label">Username</label>
+      <div class=" col-sm-4">
         <input type="text" class="form-control" name="username" value="{{data.username}}">
       </div>
     </div>
     <div class="form-group">
-      <label for="password" class="col-sm-2 control-label">Password</label>
-      <div class="col-sm-10">
+      <label for="password" class="col-sm-1 control-label">Password</label>
+      <div class=" col-sm-4">
         <input type="password" class="form-control" name="password" value="{{data.password}}">
       </div>
     </div>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class=" col-sm-4">
         <button type="submit" class="btn btn-info">Login</button>
       </div>
     </div>
 
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <h5 id='warning'>{{messages.warning}}</h5>
+      <div class="col-sm-4">
+        <div class="message">
+          <h5 id='warning'>{{messages.warning}}</h5>
+        </div>
       </div>
     </div>
 
     <div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-4">
           <a href='/signup' id='signup'>Don't have an account ? Create a new account here<a>
-      <div class="col-sm-offset-2 col-sm-10">
+        </div>
+      </div>
     </div>
-  </div>
 </form>
 </div>
