@@ -104,7 +104,7 @@ app.post("/login", function(req, res, next) {
       var dbUsers = dbUsers[0];
 
       if (dbUsers === undefined) { // if no user found return to login
-        req.flash("warning", 'Invalid username or password');
+        req.flash("warning", 'Invalid username');
         return res.redirect("/login");
       };
       if (dbUsers.password !== req.body.password) { // checks to see if the passwords match
@@ -152,15 +152,6 @@ app.get("/logout", function(req, res) { // To authenticate logging out
   delete req.session.user;
   res.redirect("/login");
 });
-
-//setup the handlers ********************* taken out temporarily
-// app.get("/", function(req, res) {
-//   res.render("home");
-//
-//   app.get("/addProduct", function(req, res) {
-//     res.render("add_products");
-//   })
-// });
 
 app.get('/statistics/:week_no', function(req, res) {
   var week_num = Number(req.params.week_no);
