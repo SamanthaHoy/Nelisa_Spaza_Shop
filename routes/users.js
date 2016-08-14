@@ -4,6 +4,7 @@ exports.display = function(req, res, next) {
     connection.query('SELECT * from users', [], function(err, results) {
       if (err) return next(err);
       res.render('users', {
+        showNavBar : req.session.user.showNavBar,
         no_users: results.length === 0,
         users: results
       });
@@ -12,7 +13,9 @@ exports.display = function(req, res, next) {
 };
 
 exports.showAdd = function(req, res) {
-  res.render('add_user');
+  res.render('add_user', {
+    showNavBar : req.session.user.showNavBar
+  })
 }
 
 exports.add = function(req, res, next) {
@@ -44,6 +47,7 @@ exports.get = function(req, res, next) {
     connection.query('SELECT * FROM users WHERE user_id = ?', [id], function(err, result) {
       if (err) return next(err);
       res.render('edit_user', {
+        showNavBar : req.session.user.showNavBar,
         data: result[0]
       });
     });

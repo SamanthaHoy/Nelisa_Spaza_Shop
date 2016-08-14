@@ -6,6 +6,7 @@ exports.display = function(req, res, next) {
       if (err) return next(err);
       // console.log('this came from sales', results);
       res.render('sales', {
+        showNavBar : req.session.user.showNavBar,
         adminAccess : req.session.user.is_admin,
         no_sales: results.length === 0,
         sales: results,
@@ -20,6 +21,7 @@ exports.showAdd = function(req, res) {
     connection.query('SELECT * from products', [], function(err, results) {
       if (err) return next(err);
       res.render('add_sales', {
+        showNavBar : req.session.user.showNavBar,
         products: results,
       });
     });
@@ -61,6 +63,7 @@ exports.get = function(req, res, next) {
         });
         // console.log("Data from get: " + sale) ;
         res.render('edit_sales', {
+          showNavBar : req.session.user.showNavBar,
           products: products,
           data: sale
         });
