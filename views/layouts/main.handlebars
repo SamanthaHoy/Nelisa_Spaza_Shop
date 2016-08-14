@@ -9,33 +9,38 @@
 </head>
 
 <body>
+  {{showNavBar}}
+
 
     <nav class="navbar navbar-dark bg-inverse">
     <div class="collapse navbar-collapse" id="mainNavBar">
       <nav class="navbar navbar-default navbar-fixed-top ">
       <!-- <ul class="nav navbar-nav"> -->
+
       <ul class="nav nav-pills">
+      {{#if showNavBar}}
         <!-- <li><a href="/login">Login</a></li> -->
-        <li class="active"><a href="/">Home</a></li>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistics <span class="caret"></span> </a>
-          <ul class="dropdown-menu">
-            <li><a href="/statistics/1">Week1</a></li>
-            <li><a href="/statistics/2">Week2</a></li>
-            <li><a href="/statistics/3">Week3</a></li>
-            <li><a href="/statistics/4">Week4</a></li>
-          </ul>
-        </li>
-        <li><a href="/categories">Categories</a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/sales">Sales</a></li>
-        <li><a href="/purchases">Purchases</a></li>
-        {{#if is_admin}}
-          <li><a href="/users">Users</a></li>
+          <li class="active"><a href="/">Home</a></li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistics <span class="caret"></span> </a>
+            <ul class="dropdown-menu">
+              <li><a href="/statistics/1">Week1</a></li>
+              <li><a href="/statistics/2">Week2</a></li>
+              <li><a href="/statistics/3">Week3</a></li>
+              <li><a href="/statistics/4">Week4</a></li>
+            </ul>
+          </li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/products">Products</a></li>
+          <li><a href="/sales">Sales</a></li>
+          <li><a href="/purchases">Purchases</a></li>
+          {{#if is_admin}}
+            <li><a href="/users">Users</a></li>
+          {{/if}}
+          <li><a href="/logout">Logout</a></li>
         {{/if}}
-        <li><a href="/logout">Logout</a></li>
       </ul>
-    </div>
+      </div>
     </div>
   </nav>
  <div class="container">
@@ -51,6 +56,7 @@
   $(".dropdown-toggle").dropdown();
   });
     </script>
+
 </body>
 
 </html>

@@ -5,6 +5,7 @@ exports.display = function (req, res, next) {
         if (err) return next(err);
 				// console.log('this came from categories', results);
 				res.render( 'categories', {
+						showNavBar	: req.session.user.showNavBar, // testing
 						adminAccess : req.session.user.is_admin,
 						no_products : results.length === 0,
 						categories : results
@@ -14,7 +15,10 @@ exports.display = function (req, res, next) {
 };
 
 exports.showAdd = function(req, res){
-	res.render('add_category');
+	// res.render('add_category');
+	res.render('add_category', {
+			showNavBar	: req.session.user.showNavBar // testing
+	});
 }
 
 exports.add = function (req, res, next) {
@@ -38,7 +42,10 @@ exports.get = function(req, res, next){
 	req.getConnection(function(err, connection){
 		connection.query('SELECT * FROM categories WHERE cat_id = ?', [cat_id], function(err,result){
 			if(err) return next(err);
-			res.render('edit_category',{data : result[0]});
+			// res.render('edit_category',{data : result[0]});
+			res.render('edit_category',{
+				showNavBar	: req.session.user.showNavBar, // testing
+				data : result[0]});
 		});
 	});
 };

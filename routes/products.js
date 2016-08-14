@@ -4,6 +4,7 @@ exports.display = function(req, res, next) {
     connection.query('SELECT * from products', [], function(err, results) {
       if (err) return next(err);
       res.render('products', {
+        showNavBar : req.session.user.showNavBar,
         adminAccess: req.session.user.is_admin,
         no_products: results.length === 0,
         products: results,
@@ -18,6 +19,7 @@ exports.showAdd = function(req, res) {
     connection.query('SELECT * from categories', [], function(err, results) { // for the lookup of the category ID
       if (err) return next(err);
       res.render('add_products', {
+        showNavBar	: req.session.user.showNavBar,
         categories: results
       });
     });
@@ -52,6 +54,7 @@ exports.get = function(req, res, next) {
           return category;
         });
         res.render('edit_products', {
+          showNavBar	: req.session.user.showNavBar, 
           categories: categories,
           data: product
         });

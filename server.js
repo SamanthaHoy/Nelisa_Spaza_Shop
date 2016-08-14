@@ -36,8 +36,7 @@ var dbOptions = {
   port: 3306,
   database: 'nelisa'
 };
-var showNavBar = false;
-var adminAccess = false; 
+var showNavBar = true;
 
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
@@ -83,13 +82,14 @@ var checkUser = function(req, res, next) {
 
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
   res.render("home", {
+    showNavBar : req.session.user.showNavBar,
     username: req.session.user.username,
     is_admin: req.session.user.is_admin
   })
 });
 
 app.get("/login", function(req, res) {
-  res.render("login", {});
+  res.render("login", {showNavBar : false});  // ************** TESTING
 });
 
 app.post("/login", function(req, res, next) {
@@ -125,17 +125,19 @@ app.post("/login", function(req, res, next) {
       if (dbUsers.is_admin === "admin") { // sets the user roles , checking for admin
         req.session.user = {
           username: req.body.username,
-          is_admin: true
+          is_admin: true,
+          showNavBar : true
         };
         adminAccess = req.session.user.is_admin;
-        console.log("1)dbUsers.is_admin :" + adminAccess);
+        console.log("1)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
       } else { // disables the rights to admin
         req.session.user = {
           username: req.body.username,
-          is_admin: false
+          is_admin: false,
+          showNavBar : true
         };
         adminAccess = req.session.user.is_admin;
-        console.log("2)dbUsers.is_admin :" + adminAccess);
+        console.log("2)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
       };
 
       var allowedToLogin = false; // variable reset for allowing a user to go to login page
