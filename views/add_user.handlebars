@@ -1,27 +1,48 @@
-<h1>Add user</h1>
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
-<form action="/users/add" method="POST">
+<h1>Add user</h1><br>
+
+<form class="form-horizontal" action="/users/add" method="POST">
 
 	<div>
-		<label for="">User Name </label>
-		<input type="text" name="username" value="{{username}}">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">User Name </label>
+			<div class="col-sm-2">
+				<input type="text" name="username" value="{{username}}">
+			</div>
+		</div>
 	</div>
 
 	<div>
-		<label for="">Password</label>
-		<input type="password" name="password" value="{{password}}">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">Password </label>
+				<div class="col-sm-3">
+					<input type="password" name="password" value="{{password}}">
+				</div>
+		</div>
 	</div>
 
 	<div>
-		<label for="">Email</label>
-		<input type="email" name="email" value="{{email}}">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-3">
+				<input type="email" name="email" value="{{email}}">
+			</div>
+		</div>
 	</div>
 
 	<div>
-		<label for="">Role</label>
-		<input type="text" name="is_admin" value="{{is_admin}}">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">Role</label>
+			<div class="col-sm-2">
+				<input type="text" name="is_admin" value="{{is_admin}}">
+			</div>
+		</div>
 	</div>
 
-	<input type="submit">
-
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-0">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
 </form>
