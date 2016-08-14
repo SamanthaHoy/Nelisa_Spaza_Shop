@@ -90,7 +90,7 @@ app.get("/home", checkUser, function(req, res) { // before logging in will check
 });
 
 app.get("/login", function(req, res) {
-  res.render("login", {showNavBar : false});  // ************** TESTING
+  res.render("login", {showNavBar : false});
 });
 
 app.post("/login", function(req, res, next) {
@@ -180,7 +180,6 @@ app.get('/categories/add', categories.showAdd);
 app.post('/categories/add', categories.add);
 app.get('/categories/edit/:cat_id', categories.get);
 app.post('/categories/update/:cat_id', categories.update);
-//this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/categories/delete/:cat_id', categories.delete);
 
 app.get('/products', products.display);
@@ -188,7 +187,6 @@ app.get('/products/add', products.showAdd);
 app.post('/products/add', products.add);
 app.get('/products/edit/:prod_id', products.get);
 app.post('/products/update/:prod_id', products.update);
-//this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/products/delete/:prod_id', products.delete);
 
 app.get('/sales', sales.display);
