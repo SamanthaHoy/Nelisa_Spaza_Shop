@@ -89,7 +89,7 @@ app.get("/home", checkUser, function(req, res) { // before logging in will check
 });
 
 app.get("/login", function(req, res) {
-  res.render("login", {showNavBar : false});  // ************** TESTING
+  res.render("login", {showNavBar : false});
 });
 
 app.post("/login", function(req, res, next) {
@@ -129,7 +129,7 @@ app.post("/login", function(req, res, next) {
           showNavBar : true
         };
         adminAccess = req.session.user.is_admin;
-        console.log("1)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
+        console.log("1)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar + " username : " + req.session.user.username);
       } else { // disables the rights to admin
         req.session.user = {
           username: req.body.username,
@@ -137,7 +137,7 @@ app.post("/login", function(req, res, next) {
           showNavBar : true
         };
         adminAccess = req.session.user.is_admin;
-        console.log("2)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
+        console.log("2)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar + " username : " + req.session.user.username);
       };
 
       var allowedToLogin = false; // variable reset for allowing a user to go to login page
@@ -172,14 +172,13 @@ app.get('/statistics/:week_no', function(req, res) {
     res.render('error_template', error);
   };
 });
-
+// console.log("in Server for req.session.user:" + req.session.user.username);
 // app.get('/', categories.display);
 app.get('/categories', categories.display);
 app.get('/categories/add', categories.showAdd);
 app.post('/categories/add', categories.add);
 app.get('/categories/edit/:cat_id', categories.get);
 app.post('/categories/update/:cat_id', categories.update);
-//this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/categories/delete/:cat_id', categories.delete);
 
 app.get('/products', products.display);
@@ -187,7 +186,6 @@ app.get('/products/add', products.showAdd);
 app.post('/products/add', products.add);
 app.get('/products/edit/:prod_id', products.get);
 app.post('/products/update/:prod_id', products.update);
-//this should be a post but this is only an illustration of CRUD - not on good practices
 app.get('/products/delete/:prod_id', products.delete);
 
 app.get('/sales', sales.display);

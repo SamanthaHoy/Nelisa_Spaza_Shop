@@ -1,4 +1,5 @@
 exports.display = function (req, res, next) {
+		console.log("in categories: for req.session.user.username :" + req.session.user.username + " showNavBar :" + req.session.user.showNavBar);
 	req.getConnection(function(err, connection){
 		if (err) return next(err);
 		connection.query('SELECT * from categories', [], function(err, results) {
@@ -30,7 +31,7 @@ exports.add = function (req, res, next) {
 		var data = {
       		cat_name : input.cat_name
 		};
-		console.log("Data: " + data);
+		// console.log("Data: " + data);
 	connection.query('insert into categories set ?', data, function(err, results) {
 			if (err) return next(err);
 		res.redirect('/categories');
