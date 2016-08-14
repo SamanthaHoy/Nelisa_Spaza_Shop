@@ -6,6 +6,7 @@ exports.display = function(req, res, next) {
     connection.query('SELECT * from users', [], function(err, results) {
       if (err) return next(err);
       res.render('users', {
+        adminAccess : adminAccess,
         no_users: results.length === 0,
         users: results
       });
