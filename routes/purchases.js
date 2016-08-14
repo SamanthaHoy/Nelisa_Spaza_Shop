@@ -4,6 +4,7 @@ exports.display = function(req, res, next) {
     connection.query('SELECT * from purchases', [], function(err, results) {
       if (err) return next(err);
       res.render('purchases', {
+        adminAccess : req.session.user.is_admin,
         no_purchases: results.length === 0,
         purchases: results,
       });

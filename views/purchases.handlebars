@@ -1,9 +1,12 @@
 <div class="row">
   <div class="col-md-12">
     <h1>Purchases</h1>
+    {{#if adminAccess}}
     <a class="btn btn-info" href="/purchases/add">Add new purchase</a>
+    {{/if}}
     <div class="table-responsive">
     <table class="table table-hover">
+      {{#if adminAccess}}
       <tr>
         <th> Purchases ID </th>
         <th> Shop</th>
@@ -26,6 +29,26 @@
         <td> <h4> <a href="/purchases/delete/{{purchases_id}}">Delete</a> </h4></td>
       </tr>
     {{/purchases}}
+    {{else}}
+    <tr>
+      <th> Purchases ID </th>
+      <th> Shop</th>
+      <th> Purchase Date </th>
+      <th> Prod ID </td>
+      <th> Purchase Quantity </td>
+      <th> Purchase Unit Price </td>
+    </tr>
+  {{#purchases}}
+    <tr>
+      <td> <h4> {{purchases_id}} </h4> </td>
+      <td> <h4> {{shop}}</h4> </td>
+      <td> <h4> {{purchase_date}} </h4> </td>
+      <td> <h4> {{prod_id}} </h4> </td>
+      <td> <h4> {{purchases_quantity}} </h4> </td>
+      <td> <h4> {{purchases_unit_price}} </h4> </td>
+    </tr>
+  {{/purchases}}
+    {{/if}}
     </table>
   </div>
   </div>
