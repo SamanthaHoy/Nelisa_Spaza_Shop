@@ -5,6 +5,7 @@ exports.display = function(req, res, next) {
       if (err) return next(err);
       res.render('users', {
         showNavBar : req.session.user.showNavBar,
+        is_admin: req.session.user.is_admin,
         no_users: results.length === 0,
         users: results
       });
@@ -14,7 +15,8 @@ exports.display = function(req, res, next) {
 
 exports.showAdd = function(req, res) {
   res.render('add_user', {
-    showNavBar : req.session.user.showNavBar
+    showNavBar : req.session.user.showNavBar,
+    is_admin: req.session.user.is_admin
   })
 }
 
@@ -48,6 +50,7 @@ exports.get = function(req, res, next) {
       if (err) return next(err);
       res.render('edit_user', {
         showNavBar : req.session.user.showNavBar,
+        is_admin: req.session.user.is_admin,
         data: result[0]
       });
     });

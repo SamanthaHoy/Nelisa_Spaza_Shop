@@ -6,6 +6,7 @@ exports.display = function(req, res, next) {
       res.render('products', {
         showNavBar : req.session.user.showNavBar,
         adminAccess: req.session.user.is_admin,
+        is_admin: req.session.user.is_admin, // will refactor this soon
         no_products: results.length === 0,
         products: results,
       });
@@ -20,6 +21,7 @@ exports.showAdd = function(req, res) {
       if (err) return next(err);
       res.render('add_products', {
         showNavBar	: req.session.user.showNavBar,
+        is_admin: req.session.user.is_admin,
         categories: results
       });
     });
@@ -54,7 +56,8 @@ exports.get = function(req, res, next) {
           return category;
         });
         res.render('edit_products', {
-          showNavBar	: req.session.user.showNavBar, 
+          showNavBar	: req.session.user.showNavBar,
+          is_admin: req.session.user.is_admin,
           categories: categories,
           data: product
         });

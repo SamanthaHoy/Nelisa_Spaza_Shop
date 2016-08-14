@@ -8,6 +8,7 @@ exports.display = function(req, res, next) {
       res.render('sales', {
         showNavBar : req.session.user.showNavBar,
         adminAccess : req.session.user.is_admin,
+        is_admin: req.session.user.is_admin,
         no_sales: results.length === 0,
         sales: results,
       });
@@ -22,6 +23,7 @@ exports.showAdd = function(req, res) {
       if (err) return next(err);
       res.render('add_sales', {
         showNavBar : req.session.user.showNavBar,
+        is_admin: req.session.user.is_admin,
         products: results,
       });
     });
@@ -64,6 +66,7 @@ exports.get = function(req, res, next) {
         // console.log("Data from get: " + sale) ;
         res.render('edit_sales', {
           showNavBar : req.session.user.showNavBar,
+          is_admin: req.session.user.is_admin,
           products: products,
           data: sale
         });

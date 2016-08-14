@@ -6,7 +6,8 @@ exports.display = function (req, res, next) {
 				// console.log('this came from categories', results);
 				res.render( 'categories', {
 						showNavBar	: req.session.user.showNavBar, // testing
-						adminAccess : req.session.user.is_admin,
+						adminAccess : req.session.user.is_admin, // will refactor this soon
+						is_admin: req.session.user.is_admin,
 						no_products : results.length === 0,
 						categories : results
 				});
@@ -17,7 +18,8 @@ exports.display = function (req, res, next) {
 exports.showAdd = function(req, res){
 	// res.render('add_category');
 	res.render('add_category', {
-			showNavBar	: req.session.user.showNavBar // testing
+			showNavBar	: req.session.user.showNavBar, // testing
+			is_admin: req.session.user.is_admin
 	});
 }
 
@@ -45,6 +47,7 @@ exports.get = function(req, res, next){
 			// res.render('edit_category',{data : result[0]});
 			res.render('edit_category',{
 				showNavBar	: req.session.user.showNavBar, // testing
+				is_admin: req.session.user.is_admin,
 				data : result[0]});
 		});
 	});
