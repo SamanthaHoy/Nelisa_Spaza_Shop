@@ -18,7 +18,7 @@ exports.showAdd = function(req, res) {
 exports.add = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
-    var bcrypt = require('bcryptjs');
+    // var bcrypt = require('bcryptjs');
 
     // const myFormPassword = req.body.password;
     // console.log("myFormPassword :" + myFormPassword);
