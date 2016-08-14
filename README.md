@@ -5,3 +5,15 @@ see the stats for most & least popular product , category and most and least pro
 based on her purchasing stock , and selling stock .
 
 This application has CRUD functionality which enables Nelisa to modify any of the fields within the tables of her database . Any other user will only have read access instead of Admin access .
+
+As a sample user:
+
+Admin user:
+Username : Nelisa
+Password : password
+
+Shop-keeper:
+Username : Xolani
+Password : password
+
+Project instructions can be found on : http://nelisa.projectcodex.co/
