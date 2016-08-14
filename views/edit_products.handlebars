@@ -1,20 +1,31 @@
 <h1>Edit products</h1>
 
-<form action="/products/update/{{data.prod_id}}" method="POST">
+<form class="form-horizontal" action="/products/update/{{data.prod_id}}" method="POST">
 
-	<div class="">
-		<label for="">Product Name</label>
-		<input type="text" name="product_name" value="{{data.product_name}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Product Name</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="product_name" value="{{data.product_name}}">
+		</div>
 	</div>
 
 	<div class="">
-		<label for="">Category</label>
-		<select class="" name="category_id">
-			{{#categories}}
-				<option value="{{cat_id}}">{{cat_name}}</option>
-			{{/categories}}
-		</select>
+		<label for="" class="col-sm-2 control-label">Category</label>
+		<div class="col-sm-3">
+			<select class="form-control" name="category_id">
+				{{#categories}}
+					<option class="form-control" value="{{cat_id}}">{{cat_name}}</option>
+				{{/categories}}
+			</select>
+		</div>
 	</div>
 
-	<input type="submit">
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-0">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
+
 </form>

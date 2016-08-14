@@ -1,34 +1,51 @@
 <h1>Edit purchase</h1>
 
-<form action="/purchases/update/{{data.purchases_id}}" method="POST">
-	<div class="">
-		<label for="">Shop</label>
-		<input type="text" name="shop" value="{{data.shop}}">
+<form class="form-horizontal" action="/purchases/update/{{data.purchases_id}}" method="POST">
+
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Shop</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" name="shop" value="{{data.shop}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Purchase Date</label>
-		<input type="date" name="purchase_date" value="{{data.purchase_date}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Purchase Date</label>
+		<div class="col-sm-2">
+			<input type="date" class="form-control" name="purchase_date" value="{{data.purchase_date}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Prod ID </label>
-		<select class="" name="prod_id">
-			{{#products}}
-				<option value="{{prod_id}}">{{product_name}}</option>
-			{{/products}}
-		</select>
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Prod ID </label>
+		<div class="col-sm-3">
+			<select class="form-control" name="prod_id">
+				{{#products}}
+					<option value="{{prod_id}}">{{product_name}}</option>
+				{{/products}}
+			</select>
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Purchase Quantity</label>
-		<input type="number" name="purchases_quantity" value="{{data.purchases_quantity}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Purchase Quantity</label>
+		<div class="col-sm-2">
+			<input type="number" class="form-control" name="purchases_quantity" value="{{data.purchases_quantity}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Purchases Unit Price</label>
-		<input type="number" step="0.01" min="0" name="purchases_unit_price" value="{{data.purchases_unit_price}} ">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Purchases Unit Price</label>
+		<div class="col-sm-2">
+			<input type="number" class="form-control" step="0.01" min="0" name="purchases_unit_price" value="{{data.purchases_unit_price}} ">
+		</div>
 	</div>
 
-	<input type="submit">
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-0">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
 </form>

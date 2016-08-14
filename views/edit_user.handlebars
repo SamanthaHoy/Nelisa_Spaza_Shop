@@ -1,26 +1,40 @@
 <h1>Edit user</h1>
 
-<form action="/users/update/{{data.user_id}}" method="POST">
+<form class="form-horizontal" action="/users/update/{{data.user_id}}" method="POST">
 
-	<div class="">
-		<label for="">User Name</label>
-		<input type="text" name="username" value="{{username}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">User Name</label>
+		<div class="col-sm-2">
+			<input type="text" name="username" value="{{username}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Password</label>
-		<input type="text" name="password" value="{{password}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control"name="password" value="{{password}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Email</label>
-		<input type="text" name="email" value="{{email}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Email</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="email" value="{{email}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Role</label>
-		<input type="text" name="is_admin" value="{{is_admin}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Role</label>
+		<div class="col-sm-2">
+			<input type="text" class="form-control" name="is_admin" value="{{is_admin}}">
+		</div>
 	</div>
-	
-	<input type="submit">
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-0">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
 </form>

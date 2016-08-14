@@ -1,30 +1,45 @@
 <h1>Edit sales</h1>
 
-<form action="/sales/update/{{data.sales_id}}" method="POST">
+<form class="form-horizontal" action="/sales/update/{{data.sales_id}}" method="POST">
 
-	<div class="">
-		<label for="">Sales Date</label>
-		<input type="date" name="sales_date" value="{{data.sales_date}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Sales Date</label>
+		<div class="col-sm-2">
+			<input type="date" class="form-control"name="sales_date" value="{{data.sales_date}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Prod ID </label>
-		<select class="" name="prod_id">
-			{{#products}}
-				<option value="{{prod_id}}">{{product_name}}</option>
-			{{/products}}
-		</select>
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Prod ID </label>
+		<div class="col-sm-3">
+			<select class="form-control" name="prod_id">
+				{{#products}}
+					<option value="{{prod_id}}">{{product_name}}</option>
+				{{/products}}
+			</select>
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Sales Quantity</label>
-		<input type="number" name="sales_quantity" value="{{data.sales_quantity}}">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Sales Quantity</label>
+		<div class="col-sm-2">
+			<input type="number" class="form-control" name="sales_quantity" value="{{data.sales_quantity}}">
+		</div>
 	</div>
 
-	<div class="">
-		<label for="">Sales Unit Price</label>
-		<input type="number" step="0.01" min="0" name="sales_unit_price" value="{{data.sales_unit_price}} ">
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Sales Unit Price</label>
+		<div class="col-sm-2">
+			<input type="number" class="form-control" step="0.01" min="0" name="sales_unit_price" value="{{data.sales_unit_price}} ">
+		</div>
 	</div>
 
-	<input type="submit">
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-0">
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+		</div>
+	</div>
+
 </form>
