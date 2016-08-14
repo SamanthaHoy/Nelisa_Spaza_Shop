@@ -36,6 +36,8 @@ var dbOptions = {
   port: 3306,
   database: 'nelisa'
 };
+var showNavBar = false;
+var adminAccess = false; 
 
 //setup middleware
 app.use(myConnection(mysql, dbOptions, 'single'));
@@ -125,14 +127,17 @@ app.post("/login", function(req, res, next) {
           username: req.body.username,
           is_admin: true
         };
-        console.log("1)dbUsers.is_admin :" + dbUsers);
+        adminAccess = req.session.user.is_admin;
+        console.log("1)dbUsers.is_admin :" + adminAccess);
       } else { // disables the rights to admin
         req.session.user = {
           username: req.body.username,
           is_admin: false
         };
-        console.log("2)dbUsers.is_admin :" + dbUsers);
+        adminAccess = req.session.user.is_admin;
+        console.log("2)dbUsers.is_admin :" + adminAccess);
       };
+
       var allowedToLogin = false; // variable reset for allowing a user to go to login page
       if (req.session.user.username.trim() === req.body.username) { // if the form username matches with the database username , gets rid of the whitespaces
         allowedToLogin = true;

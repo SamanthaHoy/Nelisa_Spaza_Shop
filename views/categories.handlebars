@@ -1,9 +1,13 @@
 <div class="row">
   <div class="col-md-11">
     <h1>Categories</h1>
+
+    {{#if adminAccess}}
     <a class="btn btn-info" href="/categories/add">Add new category</a>
+    {{/if}}
     <div class="table-responsive">
     <table class="table table-hover">
+      {{#if adminAccess}}
       <tr>
         <th> Category ID </th>
         <th> Category Name </th>
@@ -18,6 +22,18 @@
         <td> <h4> <a href="/categories/delete/{{cat_id}}">Delete</a> </h4></td>
       </tr>
     {{/categories}}
+    {{else}}
+        <tr>
+          <th> Category ID </th>
+          <th> Category Name </th>
+        </tr>
+      {{#categories}}
+        <tr>
+          <td> <h4> {{cat_id}} </h4> </td>
+          <td> <h4> {{cat_name}}</h4> </td>
+        </tr>
+      {{/categories}}
+    {{/if}}
     </table>
     </div>
   </div>

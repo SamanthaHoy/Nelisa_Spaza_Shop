@@ -1,6 +1,8 @@
 exports.display = function(req, res, next) {
   req.getConnection(function(err, connection) {
     if (err) return next(err);
+    var adminAccess = req.session.user.is_admin;
+    console.log("admin access in user display is : " + req.session.user.is_admin);
     connection.query('SELECT * from users', [], function(err, results) {
       if (err) return next(err);
       res.render('users', {

@@ -1,10 +1,13 @@
 exports.display = function (req, res, next) {
 	req.getConnection(function(err, connection){
 		if (err) return next(err);
+		var adminAccess = req.session.user.is_admin;
+    console.log("admin access in category display is : " + req.session.user.is_admin);
 		connection.query('SELECT * from categories', [], function(err, results) {
         if (err) return next(err);
 				// console.log('this came from categories', results);
 				res.render( 'categories', {
+						adminAccess : adminAccess,
 						no_products : results.length === 0,
 						categories : results
 				});
