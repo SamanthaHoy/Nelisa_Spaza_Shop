@@ -55,7 +55,8 @@ app.use(bodyParser.json())
 app.use(session(
   {secret: 'my fortune cookie',
   cookie: {
-    maxAge: 60000
+    // maxAge: 60000
+    maxAge: 600000
   }
 }));
 
