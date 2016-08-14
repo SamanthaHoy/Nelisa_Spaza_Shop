@@ -5,7 +5,7 @@ exports.display = function (req, res, next) {
         if (err) return next(err);
 				// console.log('this came from categories', results);
 				res.render( 'categories', {
-						showNavBar	: req.session.user.showNavBar, 
+						showNavBar	: req.session.user.showNavBar,
 						adminAccess : req.session.user.is_admin, // will refactor this soon
 						is_admin: req.session.user.is_admin,
 						no_products : results.length === 0,
@@ -46,7 +46,7 @@ exports.get = function(req, res, next){
 			if(err) return next(err);
 			// res.render('edit_category',{data : result[0]});
 			res.render('edit_category',{
-				showNavBar	: req.session.user.showNavBar, // testing
+				showNavBar	: req.session.user.showNavBar, 
 				is_admin: req.session.user.is_admin,
 				data : result[0]});
 		});

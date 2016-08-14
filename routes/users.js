@@ -63,7 +63,7 @@ exports.update = function(req, res, next) {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
-    role: req.body.role
+    is_admin: req.body.is_admin
   };
   var id = req.params.user_id;
   req.getConnection(function(err, connection) {
