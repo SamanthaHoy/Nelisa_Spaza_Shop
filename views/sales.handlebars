@@ -1,9 +1,12 @@
 <div class="row">
   <div class="col-md-11">
     <h1>Sales</h1>
+    {{#if adminAccess}}
     <a class="btn btn-info" href="/sales/add">Add new sale</a>
+    {{/if}}
     <div class="table-responsive">
     <table class="table table-hover">
+      {{#if adminAccess}}
       <tr>
         <th> Sales ID </th>
         <th> Sales Day </th>
@@ -26,6 +29,26 @@
         <td> <h4> <a href="/sales/delete/{{sales_id}}">Delete</a> </h4></td>
       </tr>
     {{/sales}}
+    {{else}}
+      <tr>
+        <th> Sales ID </th>
+        <th> Sales Day </th>
+        <th> Sales Date </th>
+        <th> Prod ID </td>
+        <th> Sales Quantity </td>
+        <th> Sales Unit Price </td>
+      </tr>
+      {{#sales}}
+      <tr>
+        <td> <h4> {{sales_id}} </h4> </td>
+        <td> <h4> {{sales_day}}</h4> </td>
+        <td> <h4> {{sales_date}} </h4> </td>
+        <td> <h4> {{prod_id}} </h4> </td>
+        <td> <h4> {{sales_quantity}} </h4> </td>
+        <td> <h4> {{sales_unit_price}} </h4> </td>
+      </tr>
+      {{/sales}}
+    {{/if}}
     </table>
   </div>
   </div>
