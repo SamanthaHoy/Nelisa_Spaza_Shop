@@ -52,8 +52,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 //set up HttpSession middleware
-app.use(session(
-  {secret: 'my fortune cookie',
+app.use(session({
+  secret: 'my fortune cookie',
   cookie: {
     // maxAge: 60000
     maxAge: 600000
@@ -83,14 +83,16 @@ var checkUser = function(req, res, next) {
 
 app.get("/home", checkUser, function(req, res) { // before logging in will check the user
   res.render("home", {
-    showNavBar : req.session.user.showNavBar,
+    showNavBar: req.session.user.showNavBar,
     username: req.session.user.username,
     is_admin: req.session.user.is_admin
   })
 });
 
 app.get("/login", function(req, res) {
-  res.render("login", {showNavBar : false});
+  res.render("login", {
+    showNavBar: false
+  });
 });
 
 app.post("/login", function(req, res, next) {
@@ -127,7 +129,7 @@ app.post("/login", function(req, res, next) {
         req.session.user = {
           username: req.body.username,
           is_admin: true,
-          showNavBar : true
+          showNavBar: true
         };
         adminAccess = req.session.user.is_admin;
         console.log("1)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
@@ -135,7 +137,7 @@ app.post("/login", function(req, res, next) {
         req.session.user = {
           username: req.body.username,
           is_admin: false,
-          showNavBar : true
+          showNavBar: true
         };
         adminAccess = req.session.user.is_admin;
         console.log("2)dbUsers.is_admin :" + adminAccess + " showNavBar : " + showNavBar);
@@ -165,8 +167,15 @@ app.get('/statistics/:week_no', function(req, res) {
   var week_num = Number(req.params.week_no);
   if (week_num < 5) {
     var data = product_stats.getWeeklyStats(week_num);
-    return res.render('week_template', data); // return = break
-  } else {
+    // return res.render('week_template', data); // return = break
+    return res.render('week_template', {
+      showNavBar: req.session.user.showNavBar,
+      adminAccess: req.session.user.is_admin, // will refactor this soon
+      is_admin: req.session.user.is_admin,
+      data: data
+    });
+  }
+  else {
     var error = {
       error_message: "This is not a valid week.Please re-enter a number between 1-4"
     };
