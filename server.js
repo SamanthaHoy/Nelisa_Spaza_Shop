@@ -30,9 +30,14 @@ app.use(flash()); // for flash messages
 
 var myConnection = require('express-myconnection'); // express-myconnection module
 var dbOptions = {
+  // host: 'localhost',
+  // user: 'root',
+  // password: 'admin',
+  // port: 3306,
+  // database: 'nelisa'
   host: 'localhost',
-  user: 'root',
-  password: 'admin',
+  user: 'nelisa',
+  password: 'admin2016',
   port: 3306,
   database: 'nelisa'
 };
